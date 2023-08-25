@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-const Container = defineAsyncComponent(() => import('./layout/Container.vue'))
-const Logo = defineAsyncComponent(() => import('./global/Logo.vue'))
+const Container = defineAsyncComponent(() => import('../layout/Container.vue'))
+const Logo = defineAsyncComponent(() => import('../global/Logo.vue'))
 </script>
 
 <template>
