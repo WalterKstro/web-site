@@ -1,7 +1,12 @@
 <script lang="ts" setup>
+import { initCollapses } from 'flowbite';
+
+onMounted(() => {
+    initCollapses()
+})
 const Container = defineAsyncComponent(() => import('@components/layout/Container.vue'))
-const Logo = defineAsyncComponent(() => import('@components/global/Logo.vue'))
-const NavLinks = defineAsyncComponent(() => import('@components/global/header/NavLinks.vue'))
+const Logo      = defineAsyncComponent(() => import('@components/global/header/Logo.vue'))
+const NavLinks  = defineAsyncComponent(() => import('@components/global/header/NavLinks.vue'))
 const NavSocial = defineAsyncComponent(() => import('@components/global/header/NavSocial.vue'))
 </script>
 
