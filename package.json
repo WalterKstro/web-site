@@ -6,12 +6,16 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "cf-export": "contentful space export --config contentful/export-config.json --management-token CFPAT-279RU1WaNe5XyIatnPztMnstRXMx8CRHFVo_02ThXXA --space-id 4y6o4nd3t09u",
+    "cf-generate-types": "cf-content-types-generator contentful/export.json --out types/contentful"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@types/node": "^18.17.3",
+    "cf-content-types-generator": "^2.12.2",
+    "contentful-cli": "^2.6.46",
     "flowbite-typography": "^1.0.3",
     "nuxt": "^3.6.5"
   },

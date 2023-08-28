@@ -1,0 +1,20 @@
+{
+    "spaceId": "source space id",
+    "environmentId": "master",
+    "exportDir": "contentful",
+    "saveFile": true,
+    "contentFile": "export.json",
+    "includeDrafts": false,
+    "includeArchived": false,
+    "skipContentModel": false,
+    "skipContent": false,
+    "skipRoles": false,
+    "skipWebhooks": false,
+    "contentOnly": false,
+    "queryEntries": [
+      "content_type=homePage",
+      "sys.id=<entry_id>"
+    ],
+    "downloadAssets": false,
+    "host": "api.contentful.com"
+  }

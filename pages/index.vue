@@ -1,14 +1,17 @@
 <script lang="ts" setup>
-const { $contentful } = useNuxtApp()
-const { fields } = await $contentful.getEntry('1DBV7HkTNbeGtSqTp8r4Xo')
-const { sectionIntroduction, title } = fields
+import { TypeHomePageFields, TypeHomeWelcome, TypeHomeWelcomeFields } from 'types/contentful';
 
+const runtimeConfig = useRuntimeConfig();
 
-const { greeting, introduction, name, position } = sectionIntroduction.fields
 const Container = defineAsyncComponent(() => import('@components/layout/Container.vue'))
+const { $contentful } = useNuxtApp()
+const response = await $contentful.getEntry(runtimeConfig.public.contentIdHomePage,{include:2})
+const fields:TypeHomePageFields = response.fields
+const {sectionAreas,sectionIntroduction,title} = fields
+const {greeting,introduction,name,position} = sectionIntroduction?.fields as TypeHomeWelcomeFields
 
 useHead({
-  title: 'Inicio'
+  title
 })
 </script>
 
@@ -35,7 +38,7 @@ useHead({
           </NuxtLink>
         </div>
       </div>
-    </Container>
+    </Container>  
   </section>
 </template>
 
