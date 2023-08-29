@@ -3,7 +3,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@formkit/nuxt'],
   alias:{
-    '@components':'/components'
+    '@c':'/components',
+    '@a':'/assets'
   },
   runtimeConfig: {
     public:{
