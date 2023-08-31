@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .h2 {
+        @apply text-2xl tracking-tight leading-none md:text-3xl lg:text-4xl;
+    }
+}

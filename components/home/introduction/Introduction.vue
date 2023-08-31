@@ -8,13 +8,12 @@ interface Props {
   introduction:string;
   position:string;
 }
-const props = defineProps<Props>()
-
+defineProps<Props>()
 </script>
 <template>
   <section class="bg-dark">
     <Container>
-      <img src="@a/img/circle2.svg" alt=""
+      <img src="@a/img/circle.svg" alt="fondo"
         class="absolute right-0 rounded-full blur-xl bottom-0  w-full lg:w-1/2 select-none overflow-hidden animate-pulse">
       <div class="py-8 lg:py-16 relative z-10 lg:static">
         <div class="format mr-auto place-self-center lg:col-span-7 text-light">

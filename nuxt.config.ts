@@ -13,5 +13,6 @@ export default defineNuxtConfig({
       spaceId:process.env.NUXT_SPACE_ID,
       contentIdHomePage:process.env.NUXT_CONTENT_TYPE_ID_HOME_PAGE
     }
-  }
+  },
+  css: ['@/assets/css/input.css']
 })
