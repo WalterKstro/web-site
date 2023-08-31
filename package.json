@@ -6,9 +6,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "cf-export": "contentful space export --config contentful/export-config.json --management-token CFPAT-279RU1WaNe5XyIatnPztMnstRXMx8CRHFVo_02ThXXA --space-id 4y6o4nd3t09u",
-    "cf-generate-types": "cf-content-types-generator contentful/export.json --out types/contentful"
+    "postinstall": "nuxt prepare"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
