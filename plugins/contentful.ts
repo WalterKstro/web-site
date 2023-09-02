@@ -9,14 +9,13 @@ export default defineNuxtPlugin((nuxtApp) => {
     const config:CreateClientParams = {
         space: runtimeConfig.public.spaceId,
         accessToken: runtimeConfig.public.token,
-        environment:'master'
     }
 
-    const contentful:ContentfulClientApi<any> = creatingClient(config)
+    const client:ContentfulClientApi<any> = creatingClient(config)
     
     return {
         provide: {
-            contentful
+            client
         }
     }
 })
