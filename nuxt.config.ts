@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     public:{
       token:process.env.NUXT_TOKEN,
       spaceId:process.env.NUXT_SPACE_ID,
-      contentIdHomePage:process.env.NUXT_CONTENT_TYPE_ID_HOME_PAGE
+      contentIdHomePage:process.env.NUXT_CT_ID_HOME_PAGE
     }
   },
   css: ['@/assets/css/input.css']
