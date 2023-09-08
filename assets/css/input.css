@@ -13,6 +13,6 @@
         @apply md:text-lg lg:text-xl font-light;
     }
     .btn{
-        @apply format inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center rounded-full border-2 no-underline ease-in duration-300 border-0
+        @apply format inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center rounded-full no-underline ease-in duration-300 border-0;
     }
 }

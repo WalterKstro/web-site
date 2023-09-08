@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const Button = defineAsyncComponent(() => import('@c/global/Button.vue'));
+const Button    = defineAsyncComponent(() => import('@c/global/Button.vue'));
 const Container = defineAsyncComponent(() => import('@c/layout/Container.vue'))
 
 interface Props {
