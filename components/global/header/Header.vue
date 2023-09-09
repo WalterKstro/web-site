@@ -25,7 +25,7 @@ const NavSocial = defineAsyncComponent(() => import('@c/global/header/NavSocial.
                 d="M1 1h15M1 7h15M1 13h15" />
             </svg>
           </button>
-          <div class="hidden w-full md:flex md:w-auto md:gap-12" id="navbar-default">
+          <div class="hidden w-full md:flex md:w-auto md:gap-12 lg:relative lg:z-10" id="navbar-default">
             <NavLinks/>
             <NavSocial/>
           </div>

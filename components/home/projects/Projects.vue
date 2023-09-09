@@ -30,7 +30,14 @@ defineProps<Props>()
                 <div class="col-start-1 col-span-2  md:col-span-6 lg:col-start-5 lg:col-span-8">
                     <Carousel :itemsToShow="1" :wrapAround="true" :transition="300" :autoplay="5000">
                         <Slide v-for="({ fields, sys }) in images" :key="sys.id">
-                            <img :src="fields.file?.url" :alt="fields.title" class="h-auto max-w-full rounded-lg" />
+                            <NuxtImg 
+                                :src="fields.file?.url" :alt="fields.title" class="h-auto max-w-full rounded-lg" 
+                                provider="contentful"
+                                placeholder
+                                preload
+                                loading="lazy"
+                                format="webp"
+                                />
                         </Slide>
 
                         <template #addons>
