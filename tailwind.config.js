@@ -20,7 +20,7 @@ module.exports = {
         'light': '#E2E2E9',
       },
       gridTemplateColumns: {
-        'auto-grid':'repeat(auto-fit, minmax(300px,1fr))',
+        'auto-grid':'repeat(auto-fit, minmax(320px,1fr))',
     }
     }
   },

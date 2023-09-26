@@ -934,6 +934,496 @@
     }
   ],
   "entries": [
+    {
+      "metadata": {
+        "tags": [
+        ]
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "4y6o4nd3t09u"
+          }
+        },
+        "id": "Q9Wrr9b1hEp5NaM0J7qdP",
+        "type": "Entry",
+        "createdAt": "2023-08-20T00:02:06.931Z",
+        "updatedAt": "2023-08-26T16:17:57.483Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 8,
+        "publishedAt": "2023-08-26T16:17:57.483Z",
+        "firstPublishedAt": "2023-08-20T00:07:54.456Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "publishedCounter": 2,
+        "version": 9,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "automationTags": [
+        ],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "homeWelcome"
+          }
+        }
+      },
+      "fields": {
+        "greeting": {
+          "en-US": "Hola y bienvenido, te saluda"
+        },
+        "name": {
+          "en-US": "Walter Castro"
+        },
+        "position": {
+          "en-US": "FullStack Developer"
+        },
+        "introduction": {
+          "en-US": "Soy Full Stack Developer, con alrededor de 2 años de experiencia en la creación de aplicaciones web. Mi habilidad para trabajar tanto en el front-end como en el back-end me permite diseñar interfaces atractivas y funcionales, mientras implemento la lógica empresarial detrás de escena. Con experiencia en tecnologías como Tailwindcss, Laravel, Vue.js, Nuxt.js, React y bases de datos SQL."
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [
+        ]
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "4y6o4nd3t09u"
+          }
+        },
+        "id": "jF0ToJ2tAoqauZUjh5oz4",
+        "type": "Entry",
+        "createdAt": "2023-08-22T04:05:36.833Z",
+        "updatedAt": "2023-09-14T04:07:29.542Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 30,
+        "publishedAt": "2023-09-14T04:07:29.542Z",
+        "firstPublishedAt": "2023-08-22T04:06:07.953Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "publishedCounter": 12,
+        "version": 31,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "automationTags": [
+        ],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "homeAportesFrontend"
+          }
+        }
+      },
+      "fields": {
+        "area": {
+          "en-US": "Frontend"
+        },
+        "aportes": {
+          "en-US": [
+            "Realizar peticiones a recursos de tipo REST o implementar SDKs y manipular a conveniencia la información solicitada, recreando piezas de interfaces funcionales derivadas de prototipos de diseños",
+            "Crear aplicaciones progresivas, partiendo de lo más mínimo e ir integrando librerías de un determinado ecosistema o de terceros para agregar nuevas funcionalidades o características",
+            "Integrar la semántica de HTML, para componer estructuras de interfaz de usuario, derivado de componentes reutilizables y estilizados con la filosofía mobile firts"
+          ]
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [
+        ]
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "4y6o4nd3t09u"
+          }
+        },
+        "id": "4oemjzHz6ptFCAFiM64Lug",
+        "type": "Entry",
+        "createdAt": "2023-08-22T04:13:25.015Z",
+        "updatedAt": "2023-09-14T04:30:43.193Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 7,
+        "publishedAt": "2023-09-14T04:30:43.193Z",
+        "firstPublishedAt": "2023-08-22T04:13:45.305Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "publishedCounter": 2,
+        "version": 8,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "automationTags": [
+        ],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "homeAportesBackend"
+          }
+        }
+      },
+      "fields": {
+        "area": {
+          "en-US": "Backend"
+        },
+        "aportes": {
+          "en-US": [
+            "Apoyar en la implementación de las reglas del negocio desde el lado del backend, interactuando con base de datos por medio de sentencias SQL o a través de un ORM"
+          ]
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [
+        ]
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "4y6o4nd3t09u"
+          }
+        },
+        "id": "JZxJL2p4XFdvj544xXldX",
+        "type": "Entry",
+        "createdAt": "2023-08-22T04:16:52.433Z",
+        "updatedAt": "2023-08-22T04:18:30.985Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 6,
+        "publishedAt": "2023-08-22T04:18:30.985Z",
+        "firstPublishedAt": "2023-08-22T04:18:30.985Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 7,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "automationTags": [
+        ],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "homeAportes"
+          }
+        }
+      },
+      "fields": {
+        "title": {
+          "en-US": "Áreas en las que puedo aportar"
+        },
+        "frontend": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "jF0ToJ2tAoqauZUjh5oz4"
+            }
+          }
+        },
+        "backend": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "4oemjzHz6ptFCAFiM64Lug"
+            }
+          }
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [
+        ]
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "4y6o4nd3t09u"
+          }
+        },
+        "id": "1DBV7HkTNbeGtSqTp8r4Xo",
+        "type": "Entry",
+        "createdAt": "2023-08-22T04:25:40.146Z",
+        "updatedAt": "2023-08-28T00:04:55.947Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 11,
+        "publishedAt": "2023-08-28T00:04:55.947Z",
+        "firstPublishedAt": "2023-08-22T04:26:09.765Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "publishedCounter": 5,
+        "version": 12,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "automationTags": [
+        ],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "homePage"
+          }
+        }
+      },
+      "fields": {
+        "sectionIntroduction": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "Q9Wrr9b1hEp5NaM0J7qdP"
+            }
+          }
+        },
+        "sectionProjects": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "3Q3s3HaRbvA93MgG4ttNbo"
+            }
+          }
+        },
+        "sectionAreas": {
+          "en-US": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Entry",
+              "id": "JZxJL2p4XFdvj544xXldX"
+            }
+          }
+        },
+        "title": {
+          "en-US": "Inicio"
+        }
+      }
+    },
+    {
+      "metadata": {
+        "tags": [
+        ]
+      },
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "4y6o4nd3t09u"
+          }
+        },
+        "id": "3Q3s3HaRbvA93MgG4ttNbo",
+        "type": "Entry",
+        "createdAt": "2023-08-23T03:48:57.303Z",
+        "updatedAt": "2023-08-23T04:45:02.842Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 7,
+        "publishedAt": "2023-08-23T04:45:02.842Z",
+        "firstPublishedAt": "2023-08-23T04:45:02.842Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "publishedCounter": 1,
+        "version": 8,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "0YijoA8lfUreMKSyK44CNW"
+          }
+        },
+        "automationTags": [
+        ],
+        "contentType": {
+          "sys": {
+            "type": "Link",
+            "linkType": "ContentType",
+            "id": "homeProjects"
+          }
+        }
+      },
+      "fields": {
+        "title": {
+          "en-US": "Explora mis proyectos"
+        },
+        "introduction": {
+          "en-US": "Estos son algunos de mis proyectos y/o ejercicios, en donde he puesto en práctica, mis conocimientos en desarrollo frontend mayormente"
+        },
+        "images": {
+          "en-US": [
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "76JzJhlVjfMgXxFQp0fxqW"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "3eEVlqf2S0JpMaCBNQn9RZ"
+              }
+            },
+            {
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "72kcfzrGhIvIh97OQJz8yR"
+              }
+            }
+          ]
+        }
+      }
+    }
   ],
   "assets": [
     {

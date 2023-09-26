@@ -1,26 +1,26 @@
 <script lang="ts" setup>
-import { TypeHomePageFields, TypeHomeWelcomeFields, TypeHomeProjectsFields } from 'types/contentful';
+import { TypeHomePageSkeleton } from 'contentful/content-types';
 
-const runtimeConfig       = useRuntimeConfig();
-const SectionIntroduction = defineAsyncComponent(() => import('@c/home/introduction/Introduction.vue'))
-const SectionTools        = defineAsyncComponent(() => import('@c/home/tools/Tools.vue'))
-const SectionProjects     = defineAsyncComponent(() => import('@c/home/projects/Projects.vue'))
-const { $client }         = useNuxtApp()
-const response            = await $client.getEntry(runtimeConfig.public.contentIdHomePage, { include: 2 })
 
-const fields: TypeHomePageFields = response.fields
-const { sectionAreas, sectionIntroduction, title,sectionProjects } = fields
-const propsSectionIntroduction = sectionIntroduction?.fields as TypeHomeWelcomeFields
-const propsSectionProjects = sectionProjects?.fields as TypeHomeProjectsFields
+const SectionIntroduction   = defineAsyncComponent(() => import('@c/home/introduction/Introduction.vue'))
+const SectionTools          = defineAsyncComponent(() => import('@c/home/tools/Tools.vue'))
+const SectionProjects       = defineAsyncComponent(() => import('@c/home/projects/Projects.vue'))
+const SectionContributions  = defineAsyncComponent(() => import('@c/home/contributions/Contributions.vue'))
+
+const { $client }   = useNuxtApp()
+
+const response = await $client.getEntry<TypeHomePageSkeleton>('1DBV7HkTNbeGtSqTp8r4Xo',{include:2})
 
 useHead({
-  title
+  title:response.fields.title
 })
+
 </script>
 
 <template>
-  <SectionIntroduction :="propsSectionIntroduction" />
+  <SectionIntroduction :="response.fields.sectionIntroduction.fields" />
   <SectionTools/>
-  <SectionProjects :="propsSectionProjects"/>
+  <SectionProjects :="response.fields.sectionProjects.fields"/>
+  <SectionContributions :="response.fields.sectionAreas.fields"/>
 </template>
 
