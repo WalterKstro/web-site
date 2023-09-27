@@ -4,15 +4,15 @@
 
 @layer components {
     .h2 {
-        @apply text-2xl tracking-tight leading-none md:text-3xl lg:text-4xl;
+        @apply text-2xl tracking-tight leading-none mb-8 lg:mb-16 md:text-3xl lg:text-4xl font-semibold;
     }
     .h1 {
-        @apply text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl;
+        @apply text-4xl font-semibold tracking-tight mb-8 lg:mb-16 leading-none md:text-5xl xl:text-6xl;
     }
     .p{
         @apply md:text-lg lg:text-xl font-light;
     }
     .btn{
-        @apply format inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center rounded-full no-underline ease-in duration-300 border-0;
+        @apply inline-flex items-center justify-center px-5 py-2.5 text-base font-medium text-center rounded-full no-underline ease-in duration-300 border-0;
     }
 }

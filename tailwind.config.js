@@ -17,7 +17,7 @@ module.exports = {
         'dark': '#252525',
         'darken': '#0A0909',
         'orange': '#ED7A3C',
-        'light': '#E2E2E9',
+        'light': '#ffffff',
       },
       gridTemplateColumns: {
         'auto-grid':'repeat(auto-fit, minmax(320px,1fr))',

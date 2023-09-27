@@ -20,7 +20,7 @@ defineProps<Props>()
 <template>
     <section class="bg-dark py-8 lg:py-16">
         <Container>
-            <h2 class="h2 font-semibold text-center text-light mb-8 lg:mb-16">{{ title }}</h2>
+            <h2 class="h2 text-center text-light">{{ title }}</h2>
             <AutoGrid>
                 <Card :area="frontend.fields.area" :aportes="frontend.fields.aportes">
                     <template #icon>

@@ -24,7 +24,7 @@ defineProps<Props>()
                     <p class="m-0 lg:text-2xl lg:leading-tight font-semibold">{{ position }}</p>
                     <p class="mb-8 text-light lg:mb-8 p">{{ introduction }}</p>
                 </div>
-                <Button path="profile" class="text-dark bg-light">Ver mi perfil</Button>
+                <Button path="profile" class="text-dark bg-orange">Ver mi perfil</Button>
             </div>
         </Container>
     </section>

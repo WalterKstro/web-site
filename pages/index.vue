@@ -6,6 +6,7 @@ const SectionIntroduction   = defineAsyncComponent(() => import('@c/home/introdu
 const SectionTools          = defineAsyncComponent(() => import('@c/home/tools/Tools.vue'))
 const SectionProjects       = defineAsyncComponent(() => import('@c/home/projects/Projects.vue'))
 const SectionContributions  = defineAsyncComponent(() => import('@c/home/contributions/Contributions.vue'))
+const SectionContact  = defineAsyncComponent(() => import('@c/home/contact/Form.vue'))
 
 const { $client }   = useNuxtApp()
 
@@ -22,5 +23,6 @@ useHead({
   <SectionTools/>
   <SectionProjects :="response.fields.sectionProjects.fields"/>
   <SectionContributions :="response.fields.sectionAreas.fields"/>
+  <SectionContact/>
 </template>
 
