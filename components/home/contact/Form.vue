@@ -5,6 +5,7 @@ import { reset } from '@formkit/core'
 const Container     = defineAsyncComponent(() => import('@c/layout/Container.vue'));
 const Message       = defineAsyncComponent(() => import('@c/home/contact/Message.vue'));
 const Spiner        = defineAsyncComponent(() => import('@c/home/contact/Spiner.vue'));
+const config        = useRuntimeConfig();
 const submited      = ref(false)
 const showMessage   = ref(false)
 let statusSubmited  = reactive({
@@ -15,7 +16,7 @@ let statusSubmited  = reactive({
 async function handlerSubmit( input:any ) {
     submited.value  = true
     try {
-        await axios.post('https://formeezy.com/api/v1/forms/63aa1a57b59e48000842fb54/submissions',{...input})
+        await axios.post(config.public.formeezy,{...input})
 
     } catch (error) {
         statusSubmited.status = false
@@ -31,7 +32,7 @@ async function handlerSubmit( input:any ) {
 function removeMessage(){
     setTimeout(()=>{
         showMessage.value = false
-    },5000)
+    },8000)
 }
 
 const event = (value: any) => {console.log(value)}
