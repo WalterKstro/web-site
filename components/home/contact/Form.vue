@@ -1,38 +1,51 @@
 <script lang="ts" setup>
 const Container = defineAsyncComponent(() => import('@c/layout/Container.vue'));
 const Button = defineAsyncComponent(() => import('@c/global/Button.vue'));
+const submited = ref(false)
+const status = ref(false)
+
+const event = (value: any) => {
+    console.log(value)
+}
 </script>
 <template>
     <section class="py-8 lg:py-16 bg-light">
 
         <Container>
             <h2 class="h2 text-center text-dark">Contactame</h2>
-            <form class=" max-w-xs mx-auto md:max-w-md lg:max-w-lg ">
-                <div class="mb-6">
-                    <label for="name" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Nombre</label>
-                    <input type="text" id="name"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="Jhon Doe" required>
-                </div>
+            <FormKit type="form" :actions="false" #default="{ state: { valid } }" id="contacto"
+                form-class="max-w-xs mx-auto md:max-w-md lg:max-w-lg" messages="text-sm text-gray-900" :on-input="event">
 
-                <div class="mb-6">
-                    <label for="email" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Correo
-                        electrónico</label>
-                    <input type="email" id="email"
-                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                        placeholder="jhon@ejemplo.com" required>
-                </div>
+                <FormKit type="text" name="name" label="Nombre" validation="required"
+                    :validation-messages="{ required: 'Este campo es requerido' }" 
+                    id="name" outer-class="mb-6"
+                    placeholder="Juan Perez" label-class="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+                    input-class="field"
+                    :on-input="event"
+                    message-class="validation-message"/>
 
-                <div class="mb-6">
-                    <label for="message" class="block mb-2 text-base font-medium text-gray-900 dark:text-white">Deja tu
-                        mensaje</label>
-                    <textarea id="message" rows="4"
-                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Hola mucho gusto..."></textarea>
-                </div>
+                <FormKit type="email" name="email" label="Correo electrónico" validation="required|email"
+                    :validation-messages="{ required: 'Este campo es requerido',email:'Ingrese un correo electrónico válido' }" 
+                    id="name" placeholder="jperez@ejemplo.com"
+                    outer-class="mb-6" label-class="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+                    input-class="field"
+                    :on-input="event"
+                    message-class="validation-message"/>
 
-                <Button path="profile" class="text-light bg-dark">Enviar mensaje</Button>
-            </form>
+                <FormKit type="textarea" name="email" rows="5" label="Deja tu mensaje" validation="required"
+                    :validation-messages="{ required: 'Este campo es requerido' }" 
+                    id="message"
+                    placeholder="Hola mucho gusto..." outer-class="mb-6"
+                    label-class="block mb-2 text-base font-medium text-gray-900 dark:text-white"
+                    input-class="field"
+                    :on-input="event"
+                    message-class="validation-message"/>
+
+                <FormKit type="submit" :on-input="event">
+                    <Button path="profile" class="text-light bg-dark">Enviar mensaje</Button>
+                </FormKit>
+
+            </FormKit>
         </Container>
     </section>
 </template>
