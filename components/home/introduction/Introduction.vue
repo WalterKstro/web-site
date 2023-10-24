@@ -14,8 +14,6 @@ defineProps<Props>()
 <template>
     <section class="bg-dark">
         <Container>
-            <img src="@a/img/circle.svg" alt="fondo" loading="lazy"
-                class="absolute right-0 rounded-full blur-xl bottom-0  w-full lg:w-1/2 select-none overflow-hidden animate-pulse" />
             <div class="format py-8 lg:py-16 relative z-10 lg:static">
                 <div class="mr-auto place-self-center lg:col-span-7 text-light">
                     <p class="lg:text-2xl lg:leading-tight m-0 font-semibold">{{ greeting }}</p>

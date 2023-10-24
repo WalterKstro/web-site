@@ -17,7 +17,7 @@ defineProps<Props>()
 </script>
  
 <template>
-    <main>
+    <main class="py-8 lg:py-16">
         <Container>
             <Grid>
                 <div class="format col-span-2 md:col-span-6 lg:col-span-4">
