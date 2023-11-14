@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@formkit/nuxt', '@nuxt/image'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-icon', '@formkit/nuxt', '@nuxt/image','@pinia/nuxt'],
   alias: {
     '@c': '/components',
     '@a': '/assets'
@@ -25,7 +25,6 @@ export default defineNuxtConfig({
       'lg': 1024,
       'xl': 1280,
       'xxl': 1536,
-      '2xl': 1536
     },
   }
 })

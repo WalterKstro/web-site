@@ -10,9 +10,9 @@ const SectionContact        = defineAsyncComponent(() => import('@c/home/contact
 const { $client }   = useNuxtApp()
 
 const [introduction,projects,areas] = await Promise.all([
-    await $client.getEntry<TypeHomeWelcomeSkeleton>('Q9Wrr9b1hEp5NaM0J7qdP'),
-    await $client.getEntry<TypeHomeProjectsSkeleton>('3Q3s3HaRbvA93MgG4ttNbo'),
-    await $client.getEntry<TypeProjectsPageSkeleton>('JZxJL2p4XFdvj544xXldX')
+    await $client.getEntry<TypeHomeWelcomeSkeleton>('Q9Wrr9b1hEp5NaM0J7qdP',{include:10}),
+    await $client.getEntry<TypeHomeProjectsSkeleton>('3Q3s3HaRbvA93MgG4ttNbo',{include:10}),
+    await $client.getEntry<TypeProjectsPageSkeleton>('JZxJL2p4XFdvj544xXldX',{include:10})
 ])
 
 useHead({

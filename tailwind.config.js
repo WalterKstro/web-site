@@ -20,7 +20,8 @@ module.exports = {
         'light': '#ffffff',
       },
       gridTemplateColumns: {
-        'auto-grid':'repeat(auto-fit, minmax(320px,1fr))',
+        'auto-grid-fill':'repeat(auto-fill, minmax(320px,1fr))',
+        'auto-grid-fit':'repeat(auto-fit, minmax(320px,1fr))',
     }
     }
   },

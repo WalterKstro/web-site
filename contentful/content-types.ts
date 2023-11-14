@@ -1,4 +1,4 @@
-import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
+import type { Asset, ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
 
 export interface TypeHomeAportesFields {
     title: EntryFieldTypes.Symbol;
@@ -66,7 +66,7 @@ export type TypeHomeWelcome<Modifiers extends ChainModifiers, Locales extends Lo
 export interface TypeProjectFields {
     title: EntryFieldTypes.Symbol;
     extract: EntryFieldTypes.Text;
-    images: EntryFieldTypes.Array<EntryFieldTypes.AssetLink>;
+    images: Asset[]
     tags: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
     links: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }

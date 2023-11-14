@@ -11,7 +11,7 @@ interface Props {
 }
 
 const Container = defineAsyncComponent(() => import('@c/layout/Container.vue'));
-const AutoGrid = defineAsyncComponent(() => import('@c/layout/AutoGrid.vue'));
+const AutoGrid = defineAsyncComponent(() => import('@c/layout/AutoGridFit.vue'));
 const Card = defineAsyncComponent(() => import('@c/home/contributions/Card.vue'))
 
 defineProps<Props>()
