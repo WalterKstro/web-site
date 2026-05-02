@@ -9,18 +9,30 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
+import { portfolioData } from './portfolio'
+import {
+  experience1,
+  experience2,
+  experience3,
+  experience4,
+  experience5,
+  experience6,
+} from './experiences'
+import { project1, project2, project3, project4 } from './projects'
 
 const collections: CollectionSlug[] = [
   'categories',
   'media',
   'pages',
   'posts',
+  'experiences',
+  'projects',
   'forms',
   'form-submissions',
   'search',
 ]
 
-const globals: GlobalSlug[] = ['header', 'footer']
+const globals: GlobalSlug[] = ['header', 'footer', 'portfolio']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -59,15 +71,15 @@ export const seed = async ({
     ),
   )
 
-  await Promise.all(
-    collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
-  )
+  for (const collection of collections) {
+    await payload.db.deleteMany({ collection, req, where: {} })
+  }
 
-  await Promise.all(
-    collections
-      .filter((collection) => Boolean(payload.collections[collection].config.versions))
-      .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
-  )
+  for (const collection of collections) {
+    if (payload.collections[collection].config.versions) {
+      await payload.db.deleteVersions({ collection, req, where: {} })
+    }
+  }
 
   payload.logger.info(`— Seeding demo author and user...`)
 
@@ -173,6 +185,9 @@ export const seed = async ({
   await payload.update({
     id: post1Doc.id,
     collection: 'posts',
+    context: {
+      disableRevalidate: true,
+    },
     data: {
       relatedPosts: [post2Doc.id, post3Doc.id],
     },
@@ -180,6 +195,9 @@ export const seed = async ({
   await payload.update({
     id: post2Doc.id,
     collection: 'posts',
+    context: {
+      disableRevalidate: true,
+    },
     data: {
       relatedPosts: [post1Doc.id, post3Doc.id],
     },
@@ -187,6 +205,9 @@ export const seed = async ({
   await payload.update({
     id: post3Doc.id,
     collection: 'posts',
+    context: {
+      disableRevalidate: true,
+    },
     data: {
       relatedPosts: [post1Doc.id, post2Doc.id],
     },
@@ -215,9 +236,33 @@ export const seed = async ({
     }),
   ])
 
+  payload.logger.info(`— Seeding experiences...`)
+
+  await Promise.all([
+    payload.create({ collection: 'experiences', depth: 0, data: experience1 }),
+    payload.create({ collection: 'experiences', depth: 0, data: experience2 }),
+    payload.create({ collection: 'experiences', depth: 0, data: experience3 }),
+    payload.create({ collection: 'experiences', depth: 0, data: experience4 }),
+    payload.create({ collection: 'experiences', depth: 0, data: experience5 }),
+    payload.create({ collection: 'experiences', depth: 0, data: experience6 }),
+  ])
+
+  payload.logger.info(`— Seeding projects...`)
+
+  await Promise.all([
+    payload.create({ collection: 'projects', depth: 0, data: project1 }),
+    payload.create({ collection: 'projects', depth: 0, data: project2 }),
+    payload.create({ collection: 'projects', depth: 0, data: project3 }),
+    payload.create({ collection: 'projects', depth: 0, data: project4 }),
+  ])
+
   payload.logger.info(`— Seeding globals...`)
 
   await Promise.all([
+    payload.updateGlobal({
+      slug: 'portfolio',
+      data: portfolioData,
+    }),
     payload.updateGlobal({
       slug: 'header',
       data: {
