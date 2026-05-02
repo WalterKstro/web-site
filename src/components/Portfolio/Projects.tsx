@@ -55,7 +55,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
               )}
 
               {/* Content */}
-              <div className="space-y-2">
+              <div className={`space-y-2 ${!image?.url ? 'sm:col-span-full' : ''}`}>
                 <h3 className="text-base font-medium text-slate-100">
                   {project.projectUrl ? (
                     <a
