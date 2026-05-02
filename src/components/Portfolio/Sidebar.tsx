@@ -14,6 +14,7 @@ import {
   ExternalLink,
 } from 'lucide-react'
 import type { Portfolio as PortfolioType } from '@/payload-types'
+import { ThemeToggle } from './ThemeToggle'
 
 const iconMap: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
   github: Github,
@@ -48,7 +49,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({ links, className }) =>
               target={isEmail ? undefined : '_blank'}
               rel={isEmail ? undefined : 'noopener noreferrer'}
               aria-label={link.label}
-              className="group inline-flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-teal-300 hover:bg-slate-800/50 transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2"
+              className="group inline-flex items-center justify-center p-2 rounded-lg text-pf-text-muted hover:text-pf-accent hover:bg-pf-hover transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2"
             >
               <Icon className="w-5 h-5" aria-hidden="true" />
               <span className="sr-only">{link.label}</span>
@@ -86,9 +87,9 @@ export const Navigation: React.FC<NavigationProps> = ({ items, className }) => {
             <a
               href={`#${item.sectionId}`}
               onClick={(e) => handleClick(e, item.sectionId!)}
-              className="group flex items-center gap-4 text-sm font-medium text-slate-400 hover:text-slate-100 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 rounded"
+              className="group flex items-center gap-4 text-sm font-medium text-pf-text-muted hover:text-pf-text-heading transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded"
             >
-              <span className="h-px w-8 bg-slate-600 group-hover:w-16 group-hover:bg-teal-300 transition-all duration-300" aria-hidden="true" />
+              <span className="h-px w-8 bg-pf-line group-hover:w-16 group-hover:bg-pf-accent transition-all duration-300" aria-hidden="true" />
               <span className="uppercase tracking-widest text-xs">{item.label}</span>
             </a>
           </li>
@@ -108,14 +109,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ portfolio }) => {
   return (
     <header className="flex flex-col justify-between h-full py-12 lg:py-0">
       <div>
-        <h1 className="text-4xl sm:text-5xl font-bold text-slate-100 tracking-tight mb-3">
-          {name}
-        </h1>
-        <h2 className="text-lg sm:text-xl font-medium text-teal-300 mb-4">
+        <div className="flex items-center justify-between mb-3">
+          <h1 className="text-4xl sm:text-5xl font-bold text-pf-text-heading tracking-tight">
+            {name}
+          </h1>
+          <ThemeToggle />
+        </div>
+        <h2 className="text-lg sm:text-xl font-medium text-pf-accent-text mb-4">
           {title}
         </h2>
         {tagline && (
-          <p className="text-slate-400 text-base leading-relaxed max-w-xs">
+          <p className="text-pf-text-muted text-base leading-relaxed max-w-xs">
             {tagline}
           </p>
         )}
@@ -136,7 +140,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ portfolio }) => {
             href={resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-slate-400 hover:text-teal-300 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 rounded"
+            className="inline-flex items-center gap-2 mt-6 text-sm font-medium text-pf-text-muted hover:text-pf-accent transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded"
           >
             View Full Resume
             <ExternalLink className="w-4 h-4" aria-hidden="true" />

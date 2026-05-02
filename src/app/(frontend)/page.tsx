@@ -91,6 +91,13 @@ export default async function HomePage() {
   const projDocs = (projects.docs || []) as Project[]
   const postDocs = (posts.docs || []) as Post[]
 
+  // Map nav items to sections so labels and sectionIds propagate from CMS
+  const navItems = p.navItems || []
+  const aboutNav = navItems[0]
+  const experienceNav = navItems[1]
+  const projectsNav = navItems[2]
+  const writingNav = navItems[3]
+
   return (
     <>
       {draft && <LivePreviewListener />}
@@ -98,12 +105,12 @@ export default async function HomePage() {
       {/* Skip Link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-500 focus:text-white focus:rounded-lg focus:font-medium"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-pf-skip-bg focus:text-pf-skip-text focus:rounded-lg focus:font-medium"
       >
         Skip to main content
       </a>
 
-      <div className="min-h-screen bg-slate-950 text-slate-300">
+      <div className="min-h-screen bg-pf-bg text-pf-text">
         <div className="mx-auto max-w-7xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-16">
             {/* Sidebar - Sticky on desktop */}
@@ -117,25 +124,43 @@ export default async function HomePage() {
               className="pt-24 lg:w-[55%] lg:py-24"
               tabIndex={-1}
             >
-              {p.about && <AboutSection about={p.about} />}
-              <ExperienceSection experiences={expDocs} />
-              <ProjectsSection projects={projDocs} />
-              <WritingSection posts={postDocs} />
+              {p.about && (
+                <AboutSection
+                  about={p.about}
+                  sectionId={aboutNav?.sectionId}
+                  heading={aboutNav?.label}
+                />
+              )}
+              <ExperienceSection
+                experiences={expDocs}
+                sectionId={experienceNav?.sectionId}
+                heading={experienceNav?.label}
+              />
+              <ProjectsSection
+                projects={projDocs}
+                sectionId={projectsNav?.sectionId}
+                heading={projectsNav?.label}
+              />
+              <WritingSection
+                posts={postDocs}
+                sectionId={writingNav?.sectionId}
+                heading={writingNav?.label}
+              />
 
               {/* Footer */}
-              <footer className="mt-24 text-sm text-slate-500 leading-relaxed max-w-md">
+              <footer className="mt-24 text-sm text-pf-text-subtle leading-relaxed max-w-md">
                 <p>
                   Loosely designed in{' '}
-                  <span className="text-slate-300">Figma</span> and coded in{' '}
-                  <span className="text-slate-300">Visual Studio Code</span> by{' '}
+                  <span className="text-pf-text">Figma</span> and coded in{' '}
+                  <span className="text-pf-text">Visual Studio Code</span> by{' '}
                   {p.name || 'yours truly'}. Built with{' '}
-                  <span className="text-slate-300">Next.js</span> and{' '}
-                  <span className="text-slate-300">Tailwind CSS</span>, deployed with{' '}
-                  <span className="text-slate-300">Vercel</span>.
+                  <span className="text-pf-text">Next.js</span> and{' '}
+                  <span className="text-pf-text">Tailwind CSS</span>, deployed with{' '}
+                  <span className="text-pf-text">Vercel</span>.
                 </p>
                 <p className="mt-4">
                   All text is set in the{' '}
-                  <span className="text-slate-300">Inter</span> typeface.
+                  <span className="text-pf-text">Inter</span> typeface.
                 </p>
               </footer>
             </main>

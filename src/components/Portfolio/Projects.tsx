@@ -5,9 +5,11 @@ import type { Project, Media } from '@/payload-types'
 
 interface ProjectsSectionProps {
   projects: Project[]
+  sectionId?: string
+  heading?: string
 }
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, sectionId = 'projects', heading = 'Projects' }) => {
   if (!projects || projects.length === 0) return null
 
   const sortedProjects = [...projects].sort((a, b) => {
@@ -21,15 +23,15 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
   return (
     <section
-      id="projects"
+      id={sectionId}
       className="mb-24 scroll-mt-24"
-      aria-labelledby="projects-heading"
+      aria-labelledby={`${sectionId}-heading`}
     >
       <h2
-        id="projects-heading"
-        className="text-sm font-bold uppercase tracking-widest text-slate-100 mb-8 lg:hidden"
+        id={`${sectionId}-heading`}
+        className="text-sm font-bold uppercase tracking-widest text-pf-text-heading mb-8 lg:hidden"
       >
-        Projects
+        {heading}
       </h2>
 
       <div className="space-y-12">
@@ -39,11 +41,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
           return (
             <article
               key={project.id}
-              className="group relative grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-4 sm:gap-6 p-4 -mx-4 rounded-xl hover:bg-slate-800/30 transition-colors duration-200"
+              className="group relative grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-4 sm:gap-6 p-4 -mx-4 rounded-xl hover:bg-pf-hover transition-colors duration-200"
             >
               {/* Image */}
               {image?.url && (
-                <div className="relative aspect-[4/3] sm:aspect-square rounded-lg overflow-hidden bg-slate-800">
+                <div className="relative aspect-[4/3] sm:aspect-square rounded-lg overflow-hidden bg-pf-card-bg">
                   <Image
                     src={image.url}
                     alt={`Screenshot of ${project.title}`}
@@ -56,17 +58,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
               {/* Content */}
               <div className={`space-y-2 ${!image?.url ? 'sm:col-span-full' : ''}`}>
-                <h3 className="text-base font-medium text-slate-100">
+                <h3 className="text-base font-medium text-pf-text-heading">
                   {project.projectUrl ? (
                     <a
                       href={project.projectUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 group/link hover:text-teal-300 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 rounded"
+                      className="inline-flex items-center gap-1.5 group/link hover:text-pf-accent transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded"
                     >
                       {project.title}
                       <ArrowUpRight
-                        className="w-4 h-4 text-slate-400 group-hover/link:text-teal-300 transition-all duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                        className="w-4 h-4 text-pf-text-muted group-hover/link:text-pf-accent transition-all duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
                         aria-hidden="true"
                       />
                       <span className="sr-only">(opens in new tab)</span>
@@ -77,17 +79,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                 </h3>
 
                 {project.description && (
-                  <div className="text-sm text-slate-400 leading-relaxed line-clamp-3">
+                  <div className="text-sm text-pf-text-muted leading-relaxed line-clamp-3">
                     <RichTextRenderer content={project.description} />
                   </div>
                 )}
 
                 {project.stats?.value && (
-                  <div className="flex items-center gap-1.5 text-sm text-slate-300">
-                    <Star className="w-3.5 h-3.5 text-teal-300" aria-hidden="true" />
+                  <div className="flex items-center gap-1.5 text-sm text-pf-text">
+                    <Star className="w-3.5 h-3.5 text-pf-accent" aria-hidden="true" />
                     <span>{project.stats.value}</span>
                     {project.stats.label && (
-                      <span className="text-slate-500">{project.stats.label}</span>
+                      <span className="text-pf-text-subtle">{project.stats.label}</span>
                     )}
                   </div>
                 )}
@@ -100,7 +102,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                     {project.technologies.map((tech, i) => (
                       <li
                         key={i}
-                        className="px-3 py-1 text-xs font-medium text-teal-300 bg-teal-400/10 rounded-full"
+                        className="px-3 py-1 text-xs font-medium text-pf-accent bg-pf-accent-bg rounded-full"
                       >
                         {tech.technology}
                       </li>
@@ -115,7 +117,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
 
       <a
         href="/projects"
-        className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-slate-100 hover:text-teal-300 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 rounded group"
+        className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-pf-text-heading hover:text-pf-accent transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded group"
       >
         View Full Project Archive
         <ArrowUpRight
@@ -151,7 +153,7 @@ function RichTextRenderer({ content }: { content: any }) {
           href={node.fields?.url || '#'}
           target={node.fields?.newTab ? '_blank' : undefined}
           rel={node.fields?.newTab ? 'noopener noreferrer' : undefined}
-          className="text-slate-200 hover:text-teal-300 transition-colors duration-200"
+          className="text-pf-text hover:text-pf-accent transition-colors duration-200"
         >
           {node.children?.map((child: any, i: number) => (
             <React.Fragment key={i}>{renderNode(child)}</React.Fragment>

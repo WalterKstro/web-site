@@ -6,9 +6,11 @@ import { formatDateTime } from '@/utilities/formatDateTime'
 
 interface ExperienceSectionProps {
   experiences: Experience[]
+  sectionId?: string
+  heading?: string
 }
 
-export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experiences }) => {
+export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experiences, sectionId = 'experience', heading = 'Experience' }) => {
   if (!experiences || experiences.length === 0) return null
 
   const sortedExperiences = [...experiences].sort((a, b) => {
@@ -19,15 +21,15 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
 
   return (
     <section
-      id="experience"
+      id={sectionId}
       className="mb-24 scroll-mt-24"
-      aria-labelledby="experience-heading"
+      aria-labelledby={`${sectionId}-heading`}
     >
       <h2
-        id="experience-heading"
-        className="text-sm font-bold uppercase tracking-widest text-slate-100 mb-8 lg:hidden"
+        id={`${sectionId}-heading`}
+        className="text-sm font-bold uppercase tracking-widest text-pf-text-heading mb-8 lg:hidden"
       >
-        Experience
+        {heading}
       </h2>
 
       <div className="space-y-12">
@@ -47,23 +49,23 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
               className="group relative grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 md:gap-8"
             >
               {/* Date */}
-              <div className="text-xs font-medium uppercase tracking-wider text-slate-500 md:pt-1">
+              <div className="text-xs font-medium uppercase tracking-wider text-pf-text-subtle md:pt-1">
                 {startDate} — {endDate}
               </div>
 
               {/* Content */}
               <div className="space-y-3">
-                <h3 className="text-base font-medium text-slate-100">
+                <h3 className="text-base font-medium text-pf-text-heading">
                   {exp.companyUrl ? (
                     <a
                       href={exp.companyUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 group/link hover:text-teal-300 transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 rounded"
+                      className="inline-flex items-center gap-1.5 group/link hover:text-pf-accent transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded"
                     >
                       {exp.title} · {exp.company}
                       <ArrowUpRight
-                        className="w-4 h-4 text-slate-400 group-hover/link:text-teal-300 transition-all duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                        className="w-4 h-4 text-pf-text-muted group-hover/link:text-pf-accent transition-all duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
                         aria-hidden="true"
                       />
                       <span className="sr-only">(opens in new tab)</span>
@@ -76,11 +78,11 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                 </h3>
 
                 {exp.location && (
-                  <p className="text-sm text-slate-500">{exp.location}</p>
+                  <p className="text-sm text-pf-text-subtle">{exp.location}</p>
                 )}
 
                 {exp.description && (
-                  <div className="text-sm text-slate-400 leading-relaxed">
+                  <div className="text-sm text-pf-text-muted leading-relaxed">
                     <RichTextRenderer content={exp.description} />
                   </div>
                 )}
@@ -93,7 +95,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                     {exp.technologies.map((tech, i) => (
                       <li
                         key={i}
-                        className="px-3 py-1 text-xs font-medium text-teal-300 bg-teal-400/10 rounded-full"
+                        className="px-3 py-1 text-xs font-medium text-pf-accent bg-pf-accent-bg rounded-full"
                       >
                         {tech.technology}
                       </li>
@@ -141,7 +143,7 @@ function RichTextRenderer({ content }: { content: any }) {
           href={node.fields?.url || '#'}
           target={node.fields?.newTab ? '_blank' : undefined}
           rel={node.fields?.newTab ? 'noopener noreferrer' : undefined}
-          className="text-slate-200 hover:text-teal-300 transition-colors duration-200 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-teal-400 focus-visible:outline-offset-2 rounded"
+          className="text-pf-text hover:text-pf-accent transition-colors duration-200 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded"
         >
           {node.children?.map((child: any, i: number) => (
             <React.Fragment key={i}>{renderNode(child)}</React.Fragment>
