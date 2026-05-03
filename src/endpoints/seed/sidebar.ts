@@ -1,6 +1,6 @@
-import type { Portfolio } from '@/payload-types'
+import type { Sidebar } from '@/payload-types'
 
-export const portfolioData: Omit<Portfolio, 'id' | 'createdAt' | 'updatedAt'> = {
+export const sidebarData: Omit<Sidebar, 'id' | 'createdAt' | 'updatedAt'> = {
   name: 'Brittany Chiang',
   title: 'Frontend Engineer',
   tagline: 'I build accessible, pixel-perfect experiences for the web.',
@@ -26,24 +26,6 @@ export const portfolioData: Omit<Portfolio, 'id' | 'createdAt' | 'updatedAt'> = 
       platform: 'instagram',
       url: 'https://instagram.com/bchiang7',
       label: 'Instagram',
-    },
-  ],
-  navItems: [
-    {
-      label: 'About',
-      sectionId: 'about',
-    },
-    {
-      label: 'Experience',
-      sectionId: 'experience',
-    },
-    {
-      label: 'Projects',
-      sectionId: 'projects',
-    },
-    {
-      label: 'Writing',
-      sectionId: 'writing',
     },
   ],
   about: {

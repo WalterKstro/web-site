@@ -10,18 +10,61 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { getServerSideURL } from '@/utilities/getURL'
 
 import { Sidebar } from '@/components/Portfolio/Sidebar'
-import { AboutSection } from '@/components/Portfolio/About'
-import { ExperienceSection } from '@/components/Portfolio/Experience'
-import { ProjectsSection } from '@/components/Portfolio/Projects'
-import { WritingSection } from '@/components/Portfolio/Writing'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
 
-import type { Portfolio as PortfolioType, Experience, Project, Post } from '@/payload-types'
+import type {
+  Sidebar as SidebarType,
+  Page,
+  PortfolioAboutBlock,
+  PortfolioExperienceBlock,
+  PortfolioProjectsBlock,
+  PortfolioWritingBlock,
+} from '@/payload-types'
+import { homeStatic } from '@/endpoints/seed/home-static'
+
+type NavigableBlock =
+  | PortfolioAboutBlock
+  | PortfolioExperienceBlock
+  | PortfolioProjectsBlock
+  | PortfolioWritingBlock
+
+function isNavigableBlock(
+  block: Page['layout'][0],
+): block is NavigableBlock {
+  return (
+    block.blockType === 'portfolioAbout' ||
+    block.blockType === 'portfolioExperience' ||
+    block.blockType === 'portfolioProjects' ||
+    block.blockType === 'portfolioWriting'
+  )
+}
 
 export async function generateMetadata(): Promise<Metadata> {
-  const portfolio = await getCachedGlobal('portfolio', 0)()
+  const payload = await getPayload({ config: configPromise })
 
-  const p = portfolio as PortfolioType
+  const pageResult = await payload.find({
+    collection: 'pages',
+    draft: false,
+    limit: 1,
+    pagination: false,
+    overrideAccess: false,
+    where: {
+      slug: {
+        equals: 'home',
+      },
+    },
+  })
+
+  const homePage = pageResult.docs?.[0] as Page | undefined
+
+  if (homePage) {
+    return generateMeta({ doc: homePage })
+  }
+
+  // Fallback to portfolio global
+  const sidebar = await getCachedGlobal('sidebar', 0)()
+  const p = sidebar as SidebarType
 
   const title = p?.meta?.title || p?.name || 'Portfolio'
   const description = p?.meta?.description || p?.tagline || ''
@@ -51,52 +94,35 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const { isEnabled: draft } = await draftMode()
 
-  // Fetch all data in parallel
-  const [portfolio, experiences, projects, posts] = await Promise.all([
-    getPayload({ config: configPromise }).then((payload) =>
-      payload.findGlobal({
-        slug: 'portfolio',
-        depth: 1,
-      }),
-    ),
-    getPayload({ config: configPromise }).then((payload) =>
-      payload.find({
-        collection: 'experiences',
-        limit: 100,
-        pagination: false,
-        overrideAccess: false,
-      }),
-    ),
-    getPayload({ config: configPromise }).then((payload) =>
-      payload.find({
-        collection: 'projects',
-        limit: 100,
-        pagination: false,
-        overrideAccess: false,
-      }),
-    ),
-    getPayload({ config: configPromise }).then((payload) =>
-      payload.find({
-        collection: 'posts',
-        limit: 10,
-        pagination: false,
-        overrideAccess: false,
-        draft: false,
-      }),
-    ),
-  ])
+  const payload = await getPayload({ config: configPromise })
 
-  const p = portfolio as PortfolioType
-  const expDocs = (experiences.docs || []) as Experience[]
-  const projDocs = (projects.docs || []) as Project[]
-  const postDocs = (posts.docs || []) as Post[]
+  // Fetch home page from Pages collection
+  const pageResult = await payload.find({
+    collection: 'pages',
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: {
+      slug: {
+        equals: 'home',
+      },
+    },
+  })
 
-  // Map nav items to sections so labels and sectionIds propagate from CMS
-  const navItems = p.navItems || []
-  const aboutNav = navItems[0]
-  const experienceNav = navItems[1]
-  const projectsNav = navItems[2]
-  const writingNav = navItems[3]
+  const homePage = (pageResult.docs?.[0] as Page | undefined) || homeStatic
+
+  // Generate navItems dynamically from portfolio blocks
+  const navItems = homePage.layout
+    .filter(isNavigableBlock)
+    .map((block) => ({
+      label: block.heading || '',
+      sectionId: block.sectionId || '',
+    }))
+
+  // Fetch sidebar global
+  const sidebar = await getCachedGlobal('sidebar', 1)()
+  const p = sidebar as SidebarType
 
   return (
     <>
@@ -115,7 +141,7 @@ export default async function HomePage() {
           <div className="lg:flex lg:justify-between lg:gap-16">
             {/* Sidebar - Sticky on desktop */}
             <aside className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[45%] lg:flex-col lg:justify-between lg:py-24">
-              <Sidebar portfolio={p} />
+              <Sidebar sidebar={p} navItems={navItems} />
             </aside>
 
             {/* Main Content */}
@@ -124,45 +150,10 @@ export default async function HomePage() {
               className="pt-24 lg:w-[55%] lg:py-24"
               tabIndex={-1}
             >
-              {p.about && (
-                <AboutSection
-                  about={p.about}
-                  sectionId={aboutNav?.sectionId}
-                  heading={aboutNav?.label}
-                />
-              )}
-              <ExperienceSection
-                experiences={expDocs}
-                sectionId={experienceNav?.sectionId}
-                heading={experienceNav?.label}
+              <RenderBlocks
+                blocks={homePage.layout}
+                blockWrapperClassName=""
               />
-              <ProjectsSection
-                projects={projDocs}
-                sectionId={projectsNav?.sectionId}
-                heading={projectsNav?.label}
-              />
-              <WritingSection
-                posts={postDocs}
-                sectionId={writingNav?.sectionId}
-                heading={writingNav?.label}
-              />
-
-              {/* Footer */}
-              <footer className="mt-24 text-sm text-pf-text-subtle leading-relaxed max-w-md">
-                <p>
-                  Loosely designed in{' '}
-                  <span className="text-pf-text">Figma</span> and coded in{' '}
-                  <span className="text-pf-text">Visual Studio Code</span> by{' '}
-                  {p.name || 'yours truly'}. Built with{' '}
-                  <span className="text-pf-text">Next.js</span> and{' '}
-                  <span className="text-pf-text">Tailwind CSS</span>, deployed with{' '}
-                  <span className="text-pf-text">Vercel</span>.
-                </p>
-                <p className="mt-4">
-                  All text is set in the{' '}
-                  <span className="text-pf-text">Inter</span> typeface.
-                </p>
-              </footer>
             </main>
           </div>
         </div>

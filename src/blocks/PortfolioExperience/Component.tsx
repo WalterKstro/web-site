@@ -1,17 +1,24 @@
 import React from 'react'
-import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import type { Experience, Media } from '@/payload-types'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+import type { PortfolioExperienceBlock as PortfolioExperienceBlockProps, Experience } from '@/payload-types'
 import { formatDateTime } from '@/utilities/formatDateTime'
 
-interface ExperienceSectionProps {
-  experiences: Experience[]
-  sectionId?: string
-  heading?: string
-}
+export const PortfolioExperienceBlock: React.FC<PortfolioExperienceBlockProps> = async (props) => {
+  const { heading, sectionId, limit } = props
 
-export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experiences, sectionId = 'experience', heading = 'Experience' }) => {
-  if (!experiences || experiences.length === 0) return null
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'experiences',
+    limit: limit || 100,
+    pagination: false,
+    overrideAccess: false,
+  })
+
+  const experiences = (result.docs || []) as Experience[]
+
+  if (!experiences.length) return null
 
   const sortedExperiences = [...experiences].sort((a, b) => {
     const orderDiff = (b.order || 0) - (a.order || 0)
@@ -21,7 +28,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
 
   return (
     <section
-      id={sectionId}
+      id={sectionId || 'experience'}
       className="mb-24 scroll-mt-24"
       aria-labelledby={`${sectionId}-heading`}
     >
@@ -29,7 +36,7 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
         id={`${sectionId}-heading`}
         className="text-sm font-bold uppercase tracking-widest text-pf-text-heading mb-8 lg:hidden"
       >
-        {heading}
+        {heading || 'Experience'}
       </h2>
 
       <div className="space-y-12">
@@ -48,12 +55,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
               key={exp.id}
               className="group relative grid grid-cols-1 md:grid-cols-[140px_1fr] gap-4 md:gap-8"
             >
-              {/* Date */}
               <div className="text-xs font-medium uppercase tracking-wider text-pf-text-subtle md:pt-1">
                 {startDate} — {endDate}
               </div>
-
-              {/* Content */}
               <div className="space-y-3">
                 <h3 className="text-base font-medium text-pf-text-heading">
                   {exp.companyUrl ? (
@@ -76,17 +80,14 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
                     </>
                   )}
                 </h3>
-
                 {exp.location && (
                   <p className="text-sm text-pf-text-subtle">{exp.location}</p>
                 )}
-
                 {exp.description && (
                   <div className="text-sm text-pf-text-muted leading-relaxed">
                     <RichTextRenderer content={exp.description} />
                   </div>
                 )}
-
                 {exp.technologies && exp.technologies.length > 0 && (
                   <ul
                     className="flex flex-wrap gap-2 pt-2"
@@ -111,7 +112,6 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({ experience
   )
 }
 
-// Simple rich text renderer for experience descriptions
 function RichTextRenderer({ content }: { content: any }) {
   if (!content || !content.root) return null
 

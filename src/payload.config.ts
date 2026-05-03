@@ -13,7 +13,7 @@ import { Projects } from './collections/Projects'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
-import { Portfolio } from './globals/Portfolio'
+import { Sidebar } from './globals/Sidebar'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -64,10 +64,11 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    push: true,
   }),
   collections: [Pages, Posts, Media, Categories, Users, Experiences, Projects],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, Portfolio],
+  globals: [Header, Footer, Sidebar],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

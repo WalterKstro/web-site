@@ -13,7 +13,7 @@ import {
   Codepen,
   ExternalLink,
 } from 'lucide-react'
-import type { Portfolio as PortfolioType } from '@/payload-types'
+import type { Sidebar as SidebarType } from '@/payload-types'
 import { ThemeToggle } from './ThemeToggle'
 
 const iconMap: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
@@ -28,7 +28,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string; size?: n
 }
 
 interface SocialLinksProps {
-  links: PortfolioType['socialLinks']
+  links: SidebarType['socialLinks']
   className?: string
 }
 
@@ -61,8 +61,13 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({ links, className }) =>
   )
 }
 
+interface NavItem {
+  label: string
+  sectionId: string
+}
+
 interface NavigationProps {
-  items: PortfolioType['navItems']
+  items: NavItem[]
   className?: string
 }
 
@@ -100,11 +105,12 @@ export const Navigation: React.FC<NavigationProps> = ({ items, className }) => {
 }
 
 interface SidebarProps {
-  portfolio: PortfolioType
+  sidebar: SidebarType
+  navItems: NavItem[]
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ portfolio }) => {
-  const { name, title, tagline, socialLinks, navItems, showResumeLink, resumeUrl } = portfolio
+export const Sidebar: React.FC<SidebarProps> = ({ sidebar, navItems }) => {
+  const { name, title, tagline, socialLinks, showResumeLink, resumeUrl } = sidebar
 
   return (
     <header className="flex flex-col justify-between h-full py-12 lg:py-0">

@@ -116,12 +116,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
-    portfolio: Portfolio;
+    sidebar: Sidebar;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
+    sidebar: SidebarSelect<false> | SidebarSelect<true>;
   };
   locale: null;
   widgets: {
@@ -164,50 +164,18 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   title: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    media?: (number | null) | Media;
-  };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | PortfolioAboutBlock
+    | PortfolioExperienceBlock
+    | PortfolioProjectsBlock
+    | PortfolioWritingBlock
+    | PortfolioFooterBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -225,6 +193,54 @@ export interface Page {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CallToActionBlock".
+ */
+export interface CallToActionBlock {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -444,54 +460,6 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CallToActionBlock".
- */
-export interface CallToActionBlock {
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  links?:
-    | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-          /**
-           * Choose how the link should be rendered.
-           */
-          appearance?: ('default' | 'outline') | null;
-        };
-        id?: string | null;
-      }[]
-    | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'cta';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -786,6 +754,79 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioAboutBlock".
+ */
+export interface PortfolioAboutBlock {
+  heading?: string | null;
+  sectionId?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioAbout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioExperienceBlock".
+ */
+export interface PortfolioExperienceBlock {
+  heading?: string | null;
+  sectionId?: string | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioExperience';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioProjectsBlock".
+ */
+export interface PortfolioProjectsBlock {
+  heading?: string | null;
+  sectionId?: string | null;
+  limit?: number | null;
+  featuredOnly?: boolean | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioProjects';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioWritingBlock".
+ */
+export interface PortfolioWritingBlock {
+  heading?: string | null;
+  sectionId?: string | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioWriting';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioFooterBlock".
+ */
+export interface PortfolioFooterBlock {
+  customText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioFooter';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1151,28 +1192,6 @@ export interface PayloadMigration {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  hero?:
-    | T
-    | {
-        type?: T;
-        richText?: T;
-        links?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              id?: T;
-            };
-        media?: T;
-      };
   layout?:
     | T
     | {
@@ -1181,6 +1200,11 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        portfolioAbout?: T | PortfolioAboutBlockSelect<T>;
+        portfolioExperience?: T | PortfolioExperienceBlockSelect<T>;
+        portfolioProjects?: T | PortfolioProjectsBlockSelect<T>;
+        portfolioWriting?: T | PortfolioWritingBlockSelect<T>;
+        portfolioFooter?: T | PortfolioFooterBlockSelect<T>;
       };
   meta?:
     | T
@@ -1277,6 +1301,60 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioAboutBlock_select".
+ */
+export interface PortfolioAboutBlockSelect<T extends boolean = true> {
+  heading?: T;
+  sectionId?: T;
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioExperienceBlock_select".
+ */
+export interface PortfolioExperienceBlockSelect<T extends boolean = true> {
+  heading?: T;
+  sectionId?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioProjectsBlock_select".
+ */
+export interface PortfolioProjectsBlockSelect<T extends boolean = true> {
+  heading?: T;
+  sectionId?: T;
+  limit?: T;
+  featuredOnly?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioWritingBlock_select".
+ */
+export interface PortfolioWritingBlockSelect<T extends boolean = true> {
+  heading?: T;
+  sectionId?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioFooterBlock_select".
+ */
+export interface PortfolioFooterBlockSelect<T extends boolean = true> {
+  customText?: T;
   id?: T;
   blockName?: T;
 }
@@ -1833,9 +1911,9 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "portfolio".
+ * via the `definition` "sidebar".
  */
-export interface Portfolio {
+export interface Sidebar {
   id: number;
   name: string;
   title: string;
@@ -1846,13 +1924,6 @@ export interface Portfolio {
         platform: 'github' | 'linkedin' | 'twitter' | 'instagram' | 'dribbble' | 'codepen' | 'website' | 'email';
         url: string;
         label: string;
-        id?: string | null;
-      }[]
-    | null;
-  navItems?:
-    | {
-        label: string;
-        sectionId: string;
         id?: string | null;
       }[]
     | null;
@@ -1932,9 +2003,9 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "portfolio_select".
+ * via the `definition` "sidebar_select".
  */
-export interface PortfolioSelect<T extends boolean = true> {
+export interface SidebarSelect<T extends boolean = true> {
   name?: T;
   title?: T;
   tagline?: T;
@@ -1945,13 +2016,6 @@ export interface PortfolioSelect<T extends boolean = true> {
         platform?: T;
         url?: T;
         label?: T;
-        id?: T;
-      };
-  navItems?:
-    | T
-    | {
-        label?: T;
-        sectionId?: T;
         id?: T;
       };
   showResumeLink?: T;

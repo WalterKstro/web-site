@@ -1,16 +1,24 @@
 import React from 'react'
 import Image from 'next/image'
 import { ArrowUpRight, Star } from 'lucide-react'
-import type { Project, Media } from '@/payload-types'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+import type { PortfolioProjectsBlock as PortfolioProjectsBlockProps, Project, Media } from '@/payload-types'
 
-interface ProjectsSectionProps {
-  projects: Project[]
-  sectionId?: string
-  heading?: string
-}
+export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = async (props) => {
+  const { heading, sectionId, limit, featuredOnly } = props
 
-export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, sectionId = 'projects', heading = 'Projects' }) => {
-  if (!projects || projects.length === 0) return null
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'projects',
+    limit: limit || 6,
+    pagination: false,
+    overrideAccess: false,
+  })
+
+  const projects = (result.docs || []) as Project[]
+
+  if (!projects.length) return null
 
   const sortedProjects = [...projects].sort((a, b) => {
     const orderDiff = (a.order || 0) - (b.order || 0)
@@ -18,12 +26,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, sect
     return 0
   })
 
-  const featuredProjects = sortedProjects.filter((p) => p.featured)
-  const displayProjects = featuredProjects.length > 0 ? featuredProjects : sortedProjects.slice(0, 6)
+  const displayProjects = featuredOnly
+    ? sortedProjects.filter((p) => p.featured)
+    : sortedProjects
 
   return (
     <section
-      id={sectionId}
+      id={sectionId || 'projects'}
       className="mb-24 scroll-mt-24"
       aria-labelledby={`${sectionId}-heading`}
     >
@@ -31,7 +40,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, sect
         id={`${sectionId}-heading`}
         className="text-sm font-bold uppercase tracking-widest text-pf-text-heading mb-8 lg:hidden"
       >
-        {heading}
+        {heading || 'Projects'}
       </h2>
 
       <div className="space-y-12">
@@ -43,7 +52,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, sect
               key={project.id}
               className="group relative grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-4 sm:gap-6 p-4 -mx-4 rounded-xl hover:bg-pf-hover transition-colors duration-200"
             >
-              {/* Image */}
               {image?.url && (
                 <div className="relative aspect-[4/3] sm:aspect-square rounded-lg overflow-hidden bg-pf-card-bg">
                   <Image
@@ -56,7 +64,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, sect
                 </div>
               )}
 
-              {/* Content */}
               <div className={`space-y-2 ${!image?.url ? 'sm:col-span-full' : ''}`}>
                 <h3 className="text-base font-medium text-pf-text-heading">
                   {project.projectUrl ? (

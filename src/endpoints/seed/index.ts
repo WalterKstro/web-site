@@ -9,7 +9,7 @@ import { imageHero1 } from './image-hero-1'
 import { post1 } from './post-1'
 import { post2 } from './post-2'
 import { post3 } from './post-3'
-import { portfolioData } from './portfolio'
+import { sidebarData } from './sidebar'
 import {
   experience1,
   experience2,
@@ -32,7 +32,7 @@ const collections: CollectionSlug[] = [
   'search',
 ]
 
-const globals: GlobalSlug[] = ['header', 'footer', 'portfolio']
+const globals: GlobalSlug[] = ['header', 'footer', 'sidebar']
 
 const categories = ['Technology', 'News', 'Finance', 'Design', 'Software', 'Engineering']
 
@@ -60,9 +60,7 @@ export const seed = async ({
     globals.map((global) =>
       payload.updateGlobal({
         slug: global,
-        data: {
-          navItems: [],
-        },
+        data: {},
         depth: 0,
         context: {
           disableRevalidate: true,
@@ -260,8 +258,8 @@ export const seed = async ({
 
   await Promise.all([
     payload.updateGlobal({
-      slug: 'portfolio',
-      data: portfolioData,
+      slug: 'sidebar',
+      data: sidebarData,
     }),
     payload.updateGlobal({
       slug: 'header',

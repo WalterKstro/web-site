@@ -8,8 +8,8 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 
-export const Portfolio: GlobalConfig = {
-  slug: 'portfolio',
+export const Sidebar: GlobalConfig = {
+  slug: 'sidebar',
   access: {
     read: () => true,
   },
@@ -76,26 +76,7 @@ export const Portfolio: GlobalConfig = {
                 initCollapsed: true,
               },
             },
-            {
-              name: 'navItems',
-              type: 'array',
-              fields: [
-                {
-                  name: 'label',
-                  type: 'text',
-                  required: true,
-                },
-                {
-                  name: 'sectionId',
-                  type: 'text',
-                  required: true,
-                  label: 'Section ID',
-                },
-              ],
-              admin: {
-                initCollapsed: true,
-              },
-            },
+
             {
               name: 'showResumeLink',
               type: 'checkbox',

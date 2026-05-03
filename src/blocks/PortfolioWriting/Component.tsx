@@ -1,27 +1,36 @@
 import React from 'react'
 import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
-import type { Post, Media } from '@/payload-types'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+import type { PortfolioWritingBlock as PortfolioWritingBlockProps, Post, Media } from '@/payload-types'
 import { formatDateTime } from '@/utilities/formatDateTime'
 
-interface WritingSectionProps {
-  posts: Post[]
-  sectionId?: string
-  heading?: string
-}
+export const PortfolioWritingBlock: React.FC<PortfolioWritingBlockProps> = async (props) => {
+  const { heading, sectionId, limit } = props
 
-export const WritingSection: React.FC<WritingSectionProps> = ({ posts, sectionId = 'writing', heading = 'Writing' }) => {
-  if (!posts || posts.length === 0) return null
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'posts',
+    limit: limit || 4,
+    pagination: false,
+    overrideAccess: false,
+    draft: false,
+  })
+
+  const posts = (result.docs || []) as Post[]
+
+  if (!posts.length) return null
 
   const sortedPosts = [...posts].sort((a, b) => {
     return new Date(b.publishedAt || b.createdAt || 0).getTime() - new Date(a.publishedAt || a.createdAt || 0).getTime()
   })
 
-  const displayPosts = sortedPosts.slice(0, 4)
+  const displayPosts = sortedPosts.slice(0, limit || 4)
 
   return (
     <section
-      id={sectionId}
+      id={sectionId || 'writing'}
       className="mb-24 scroll-mt-24"
       aria-labelledby={`${sectionId}-heading`}
     >
@@ -29,7 +38,7 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ posts, sectionId
         id={`${sectionId}-heading`}
         className="text-sm font-bold uppercase tracking-widest text-pf-text-heading mb-8 lg:hidden"
       >
-        {heading}
+        {heading || 'Writing'}
       </h2>
 
       <div className="space-y-6">
@@ -40,15 +49,11 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ posts, sectionId
             : formatDateTime({ date: post.createdAt, format: 'year' })
 
           return (
-            <article
-              key={post.id}
-              className="group"
-            >
+            <article key={post.id} className="group">
               <a
                 href={`/posts/${post.slug}`}
                 className="flex items-start gap-4 p-4 -mx-4 rounded-xl hover:bg-pf-hover transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2"
               >
-                {/* Year */}
                 <time
                   dateTime={post.publishedAt || post.createdAt}
                   className="text-xs font-medium uppercase tracking-wider text-pf-text-subtle pt-1 min-w-[3rem]"
@@ -56,7 +61,6 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ posts, sectionId
                   {year}
                 </time>
 
-                {/* Content */}
                 <div className="flex-1 min-w-0">
                   <h3 className="text-base font-medium text-pf-text-heading group-hover:text-pf-accent transition-colors duration-200 inline-flex items-center gap-1.5">
                     {post.title}
@@ -73,7 +77,6 @@ export const WritingSection: React.FC<WritingSectionProps> = ({ posts, sectionId
                   )}
                 </div>
 
-                {/* Thumbnail */}
                 {heroImage?.url && (
                   <div className="hidden sm:block relative w-16 h-10 rounded overflow-hidden bg-pf-card-bg flex-shrink-0">
                     <Image

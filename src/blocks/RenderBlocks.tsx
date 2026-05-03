@@ -7,6 +7,11 @@ import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
+import { PortfolioAboutBlock } from '@/blocks/PortfolioAbout/Component'
+import { PortfolioExperienceBlock } from '@/blocks/PortfolioExperience/Component'
+import { PortfolioProjectsBlock } from '@/blocks/PortfolioProjects/Component'
+import { PortfolioWritingBlock } from '@/blocks/PortfolioWriting/Component'
+import { PortfolioFooterBlock } from '@/blocks/PortfolioFooter/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -14,12 +19,18 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  portfolioAbout: PortfolioAboutBlock,
+  portfolioExperience: PortfolioExperienceBlock,
+  portfolioProjects: PortfolioProjectsBlock,
+  portfolioWriting: PortfolioWritingBlock,
+  portfolioFooter: PortfolioFooterBlock,
 }
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
+  blockWrapperClassName?: string
 }> = (props) => {
-  const { blocks } = props
+  const { blocks, blockWrapperClassName = 'my-16' } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
@@ -34,7 +45,7 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className="my-16" key={index}>
+                <div className={blockWrapperClassName} key={index}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
