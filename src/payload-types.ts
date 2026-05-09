@@ -1865,6 +1865,10 @@ export interface Header {
    * Toggle the navigation links visibility
    */
   showNavItems?: boolean | null;
+  /**
+   * Toggle the search icon visibility in the header
+   */
+  showSearch?: boolean | null;
   navItems?:
     | {
         link: {
@@ -1959,6 +1963,7 @@ export interface Sidebar {
 export interface HeaderSelect<T extends boolean = true> {
   showLogo?: T;
   showNavItems?: T;
+  showSearch?: T;
   navItems?:
     | T
     | {

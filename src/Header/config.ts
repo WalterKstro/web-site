@@ -33,6 +33,15 @@ export const Header: GlobalConfig = {
                 description: 'Toggle the navigation links visibility',
               },
             },
+            {
+              name: 'showSearch',
+              type: 'checkbox',
+              defaultValue: true,
+              label: 'Show Search Icon',
+              admin: {
+                description: 'Toggle the search icon visibility in the header',
+              },
+            },
           ],
         },
         {

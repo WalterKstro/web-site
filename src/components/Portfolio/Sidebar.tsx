@@ -14,7 +14,6 @@ import {
 } from 'react-icons/fa6'
 import { ExternalLink } from 'lucide-react'
 import type { Sidebar as SidebarType } from '@/payload-types'
-import { ThemeToggle } from './ThemeToggle'
 
 const iconMap: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
   github: FaGithub,
@@ -119,7 +118,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebar, navItems }) => {
           <h1 className="text-4xl sm:text-5xl font-bold text-pf-text-heading tracking-tight">
             {name}
           </h1>
-          <ThemeToggle />
         </div>
         <h2 className="text-lg sm:text-xl font-medium text-pf-accent-text mb-4">
           {title}
