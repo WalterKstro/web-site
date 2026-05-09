@@ -180,7 +180,7 @@
   --error: oklch(45% 0.1 25deg);
 
   /* Portfolio Theme Variables */
-  --pf-bg: #020617;
+  --pf-bg: #0f172a;
   --pf-text: #cbd5e1;
   --pf-text-heading: #f1f5f9;
   --pf-text-muted: #94a3b8;
@@ -261,7 +261,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply bg-pf-bg text-pf-text min-h-[100vh] flex flex-col;
   }
 }
 
