@@ -14,16 +14,19 @@ const CLOUDINARY_FOLDER = 'payload'
 export const getMediaUrl = (
   resource?: {
     url?: string | null
-    cloudinary?: {
-      secure_url?: string | null
-      [key: string]: unknown
-    } | null
+    cloudinary?: unknown
   } | null,
   cacheTag?: string | null,
 ): string => {
   if (!resource) return ''
 
-  const url = resource.cloudinary?.secure_url || resource.url
+  const cloudinary = resource.cloudinary
+  const secureUrl =
+    cloudinary && typeof cloudinary === 'object' && !Array.isArray(cloudinary)
+      ? (cloudinary as { secure_url?: string | null }).secure_url
+      : null
+
+  const url = secureUrl || resource.url
 
   if (!url) return ''
 
