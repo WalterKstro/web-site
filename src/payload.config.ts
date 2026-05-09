@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -17,9 +18,16 @@ import { Sidebar } from './globals/Sidebar'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import { cloudinaryAdapter } from './storage/cloudinaryAdapter'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+const cloudName = process.env.CLOUDINARY_CLOUD_NAME
+const apiKey = process.env.CLOUDINARY_API_KEY
+const apiSecret = process.env.CLOUDINARY_API_SECRET
+
+const cloudinaryEnabled = Boolean(cloudName && apiKey && apiSecret)
 
 export default buildConfig({
   admin: {
@@ -69,7 +77,25 @@ export default buildConfig({
   collections: [Pages, Posts, Media, Categories, Users, Experiences, Projects],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, Sidebar],
-  plugins,
+  plugins: [
+    ...(plugins || []),
+    ...(cloudinaryEnabled
+      ? [
+          cloudStoragePlugin({
+            collections: {
+              media: {
+                adapter: cloudinaryAdapter({
+                  cloudName: cloudName!,
+                  apiKey: apiKey!,
+                  apiSecret: apiSecret!,
+                  folder: 'payload',
+                }),
+              },
+            },
+          }),
+        ]
+      : []),
+  ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,
   typescript: {
