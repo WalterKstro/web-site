@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { anyone } from '../../access/anyone'
+import { revalidateExperience, revalidateExperienceDelete } from './hooks/revalidateExperience'
 
 export const Experiences: CollectionConfig<'experiences'> = {
   slug: 'experiences',
@@ -87,5 +88,9 @@ export const Experiences: CollectionConfig<'experiences'> = {
       defaultValue: 0,
     },
   ],
+  hooks: {
+    afterChange: [revalidateExperience],
+    afterDelete: [revalidateExperienceDelete],
+  },
   timestamps: true,
 }
