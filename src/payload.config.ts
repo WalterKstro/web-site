@@ -90,6 +90,7 @@ export default buildConfig({
                   apiSecret: apiSecret!,
                   folder: 'payload',
                 }),
+                disableLocalStorage: true,
               },
             },
           }),
