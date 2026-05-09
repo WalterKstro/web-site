@@ -19,10 +19,14 @@ export const Logo = (props: Props) => {
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
 
-  const src = media?.url || '/api/media/file/logo-light.svg'
+  const src = media?.url
   const alt = media?.alt || 'Logo'
   const width = media?.width || 193
   const height = media?.height || 34
+
+  if (!src) {
+    return null
+  }
 
   return (
     /* eslint-disable @next/next/no-img-element */

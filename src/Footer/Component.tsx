@@ -1,12 +1,26 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import Link from 'next/link'
 import React from 'react'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
+import type { Media } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 
 export async function Footer() {
   const footerData = await getCachedGlobal('footer', 1)()
+
+  let logoMedia: Media | null = null
+  if (typeof footerData.logo === 'number') {
+    const payload = await getPayload({ config: configPromise })
+    logoMedia = (await payload.findByID({
+      collection: 'media',
+      id: footerData.logo,
+    })) as Media
+  } else if (typeof footerData.logo === 'object' && footerData.logo !== null) {
+    logoMedia = footerData.logo
+  }
 
   const navItems = footerData?.navItems || []
 
@@ -15,7 +29,7 @@ export async function Footer() {
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
         {footerData?.showLogo !== false && (
           <Link className="flex items-center" href="/">
-            <Logo media={typeof footerData?.logo === 'object' && footerData?.logo !== null ? footerData.logo : null} />
+            <Logo media={logoMedia} />
           </Link>
         )}
 
