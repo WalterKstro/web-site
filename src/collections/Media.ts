@@ -10,6 +10,11 @@ import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import {
+  isCloudinaryEnabled,
+  uploadToCloudinary,
+  deleteFromCloudinary,
+} from '../storage/cloudinary'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -40,8 +45,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // Upload to the public/media directory in Next.js making them publicly accessible even outside of Payload
-    staticDir: path.resolve(dirname, '../../public/media'),
+    staticDir: isCloudinaryEnabled() ? undefined : path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     imageSizes: [
@@ -75,6 +79,54 @@ export const Media: CollectionConfig = {
         width: 1200,
         height: 630,
         crop: 'center',
+      },
+    ],
+  },
+  hooks: {
+    beforeChange: [
+      async ({ data, req, operation }) => {
+        if (!isCloudinaryEnabled() || operation !== 'create') {
+          return data
+        }
+
+        // In Payload 3.x, uploaded file is accessible via req.file
+        const file = (req as any).file
+        if (!file || !file.data) {
+          return data
+        }
+
+        try {
+          const url = await uploadToCloudinary(
+            Buffer.isBuffer(file.data) ? file.data : Buffer.from(file.data),
+            file.name || data.filename || 'upload',
+          )
+
+          return {
+            ...data,
+            url,
+            cloudinaryUrl: url,
+          }
+        } catch (err) {
+          console.error('Cloudinary upload error:', err)
+          return data
+        }
+      },
+    ],
+    beforeDelete: [
+      async ({ req, id }) => {
+        if (!isCloudinaryEnabled()) return
+
+        try {
+          const doc = await req.payload.findByID({
+            collection: 'media',
+            id: id as string,
+          })
+          if (doc?.filename) {
+            await deleteFromCloudinary(doc.filename)
+          }
+        } catch (err) {
+          console.error('Cloudinary delete error:', err)
+        }
       },
     ],
   },
