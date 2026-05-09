@@ -64,15 +64,15 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
   let src: StaticImageData | string = srcFromProps || ''
 
   if (!src && resource && typeof resource === 'object') {
-    const { alt: altFromResource, height: fullHeight, url, width: fullWidth } = resource
+    const { alt: altFromResource, height: fullHeight, width: fullWidth } = resource
 
     width = fullWidth!
     height = fullHeight!
     alt = altFromResource || ''
 
-    const cacheTag = resource.updatedAt
+    const cacheTag = 'updatedAt' in resource ? (resource.updatedAt as string | null | undefined) : undefined
 
-    src = getMediaUrl(url, cacheTag)
+    src = getMediaUrl(resource, cacheTag)
   }
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)

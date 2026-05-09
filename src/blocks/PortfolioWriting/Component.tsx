@@ -5,6 +5,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import type { PortfolioWritingBlock as PortfolioWritingBlockProps, Post, Media } from '@/payload-types'
 import { formatDateTime } from '@/utilities/formatDateTime'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 export const PortfolioWritingBlock: React.FC<PortfolioWritingBlockProps> = async (props) => {
   const { heading, sectionId, limit } = props
@@ -80,7 +81,7 @@ export const PortfolioWritingBlock: React.FC<PortfolioWritingBlockProps> = async
                 {heroImage?.url && (
                   <div className="hidden sm:block relative w-16 h-10 rounded overflow-hidden bg-pf-card-bg flex-shrink-0">
                     <Image
-                      src={heroImage.url}
+                      src={getMediaUrl(heroImage) || heroImage.url!}
                       alt=""
                       fill
                       className="object-cover"

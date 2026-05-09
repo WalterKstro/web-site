@@ -4,6 +4,7 @@ import { ArrowUpRight, Star } from 'lucide-react'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import type { PortfolioProjectsBlock as PortfolioProjectsBlockProps, Project, Media } from '@/payload-types'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = async (props) => {
   const { heading, sectionId, limit, featuredOnly } = props
@@ -55,7 +56,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
               {image?.url && (
                 <div className="relative aspect-[4/3] sm:aspect-square rounded-lg overflow-hidden bg-pf-card-bg">
                   <Image
-                    src={image.url}
+                    src={getMediaUrl(image) || image.url!}
                     alt={`Screenshot of ${project.title}`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"

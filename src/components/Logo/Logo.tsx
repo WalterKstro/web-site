@@ -1,6 +1,8 @@
 import clsx from 'clsx'
 import React from 'react'
 
+import { getMediaUrl } from '@/utilities/getMediaUrl'
+
 interface Props {
   className?: string
   loading?: 'lazy' | 'eager'
@@ -10,6 +12,10 @@ interface Props {
     alt?: string | null
     width?: number | null
     height?: number | null
+    cloudinary?: {
+      secure_url?: string | null
+      [key: string]: unknown
+    } | null
   } | null
 }
 
@@ -19,7 +25,7 @@ export const Logo = (props: Props) => {
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
 
-  const src = media?.url
+  const src = getMediaUrl(media)
   const alt = media?.alt || 'Logo'
   const width = media?.width || 193
   const height = media?.height || 34
