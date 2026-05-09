@@ -38,8 +38,10 @@ export const cloudinaryAdapter = ({
 
       async handleUpload({
         file,
+        data,
       }: {
         file: CloudinaryFile
+        data: Record<string, unknown>
       }): Promise<Partial<FileData & TypeWithID>> {
         const publicId = `${folder}/${collection.slug}/${file.filename.replace(/\.[^.]+$/, '')}`
 
@@ -65,7 +67,17 @@ export const cloudinaryAdapter = ({
           filesize: result.bytes,
           mimeType: result.resource_type === 'image' ? `image/${result.format}` : file.mimeType,
           filename: file.filename,
-        }
+          ...(data || {}),
+          cloudinary: {
+            public_id: result.public_id,
+            resource_type: result.resource_type,
+            format: result.format,
+            secure_url: result.secure_url,
+            bytes: result.bytes,
+            created_at: result.created_at,
+            version: result.version ? String(result.version) : undefined,
+          },
+        } as Partial<FileData & TypeWithID>
       },
 
       async handleDelete({
@@ -73,8 +85,10 @@ export const cloudinaryAdapter = ({
       }: {
         doc: FileData & TypeWithID & { prefix?: string }
       }): Promise<void> {
-        if (!doc.filename) return
-        const publicId = `${folder}/${collection.slug}/${doc.filename.replace(/\.[^.]+$/, '')}`
+        const publicId =
+          (doc as any).cloudinary?.public_id ||
+          (doc.filename ? `${folder}/${collection.slug}/${doc.filename.replace(/\.[^.]+$/, '')}` : '')
+        if (!publicId) return
         try {
           await cloudinary.uploader.destroy(publicId)
         } catch {
@@ -84,10 +98,27 @@ export const cloudinaryAdapter = ({
 
       generateURL({
         filename,
+        data,
       }: {
         filename: string
+        data: Record<string, unknown>
       }): string {
-        return `https://res.cloudinary.com/${cloudName}/image/upload/${folder}/${collection.slug}/${filename}`
+        const cloudinaryMeta = (data as any)?.cloudinary
+        if (cloudinaryMeta?.secure_url) {
+          return cloudinaryMeta.secure_url
+        }
+
+        const publicId = cloudinaryMeta?.public_id || `${folder}/${collection.slug}/${filename.replace(/\.[^.]+$/, '')}`
+        const resourceType = cloudinaryMeta?.resource_type || 'image'
+        const version = cloudinaryMeta?.version ? `/v${cloudinaryMeta.version}` : ''
+
+        if (resourceType === 'video') {
+          return `https://res.cloudinary.com/${cloudName}/video/upload${version}/${publicId}`
+        }
+        if (resourceType === 'raw') {
+          return `https://res.cloudinary.com/${cloudName}/raw/upload${version}/${publicId}`
+        }
+        return `https://res.cloudinary.com/${cloudName}/image/upload${version}/${publicId}`
       },
 
       staticHandler(

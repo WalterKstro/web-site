@@ -1,9 +1,9 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
 import sharp from 'sharp'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
-import { cloudinaryStorage } from 'payload-cloudinary'
 
 import { Categories } from './collections/Categories'
 import { Experiences } from './collections/Experiences'
@@ -18,6 +18,7 @@ import { Sidebar } from './globals/Sidebar'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
+import { cloudinaryAdapter } from './storage/cloudinaryAdapter'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -80,18 +81,18 @@ export default buildConfig({
     ...(plugins || []),
     ...(cloudinaryEnabled
       ? [
-          cloudinaryStorage({
+          cloudStoragePlugin({
             collections: {
               media: {
+                adapter: cloudinaryAdapter({
+                  cloudName: cloudName!,
+                  apiKey: apiKey!,
+                  apiSecret: apiSecret!,
+                  folder: 'payload',
+                }),
                 disableLocalStorage: true,
               },
             },
-            config: {
-              cloud_name: cloudName!,
-              api_key: apiKey!,
-              api_secret: apiSecret!,
-            },
-            folder: 'payload',
           }),
         ]
       : []),
