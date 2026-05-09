@@ -7,6 +7,10 @@ interface Props {
   className?: string
   loading?: 'lazy' | 'eager'
   priority?: 'auto' | 'high' | 'low'
+  src?: string | null
+  alt?: string
+  width?: number | null
+  height?: number | null
   media?: {
     url?: string | null
     alt?: string | null
@@ -20,15 +24,12 @@ interface Props {
 }
 
 export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className, media } = props
+  const { loading: loadingFromProps, priority: priorityFromProps, className, src: srcFromProps, alt, width, height, media } = props
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
 
-  const src = getMediaUrl(media)
-  const alt = media?.alt || 'Logo'
-  const width = media?.width || 193
-  const height = media?.height || 34
+  const src = srcFromProps || getMediaUrl(media)
 
   if (!src) {
     return null
@@ -37,9 +38,9 @@ export const Logo = (props: Props) => {
   return (
     /* eslint-disable @next/next/no-img-element */
     <img
-      alt={alt}
-      width={width}
-      height={height}
+      alt={alt || media?.alt || 'Logo'}
+      width={width || media?.width || 193}
+      height={height || media?.height || 34}
       loading={loading}
       fetchPriority={priority}
       decoding="async"

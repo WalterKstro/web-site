@@ -1,10 +1,15 @@
+const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME || ''
+const CLOUDINARY_FOLDER = 'payload'
+
 /**
  * Resolves the correct URL for a media resource.
  *
- * When using the payload-cloudinary plugin, the Cloudinary URL is stored
- * in `resource.cloudinary.secure_url` while `resource.url` may still
- * contain a local path like `/api/media/file/...`. This function prefers
- * the Cloudinary URL when available.
+ * Priority:
+ * 1. resource.cloudinary.secure_url (set by the adapter on upload)
+ * 2. resource.url if it's already an absolute URL (Cloudinary)
+ * 3. resource.url as-is (local path like /api/media/file/...)
+ *
+ * Local paths are handled by the staticHandler which redirects to Cloudinary.
  */
 export const getMediaUrl = (
   resource?: {

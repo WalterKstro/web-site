@@ -78,10 +78,10 @@ export const PortfolioWritingBlock: React.FC<PortfolioWritingBlockProps> = async
                   )}
                 </div>
 
-                {heroImage?.url && (
+                {getMediaUrl(heroImage) && (
                   <div className="hidden sm:block relative w-16 h-10 rounded overflow-hidden bg-pf-card-bg flex-shrink-0">
                     <Image
-                      src={getMediaUrl(heroImage) || heroImage.url!}
+                      src={getMediaUrl(heroImage)}
                       alt=""
                       fill
                       className="object-cover"

@@ -6,7 +6,8 @@ import configPromise from '@payload-config'
 import type { Media } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
+import { Logo } from '@/components/Logo'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
 
 export async function Footer() {
   const footerData = await getCachedGlobal('footer', 1)()
@@ -22,14 +23,19 @@ export async function Footer() {
     logoMedia = footerData.logo
   }
 
+  const logoSrc = getMediaUrl(logoMedia)
+  const logoAlt = logoMedia?.alt || 'Logo'
+  const logoWidth = logoMedia?.width || 193
+  const logoHeight = logoMedia?.height || 34
+
   const navItems = footerData?.navItems || []
 
   return (
     <footer className="mt-auto bg-pf-bg text-pf-text">
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-        {footerData?.showLogo !== false && (
+        {footerData?.showLogo !== false && logoSrc && (
           <Link className="flex items-center" href="/">
-            <Logo media={logoMedia} />
+            <Logo src={logoSrc} alt={logoAlt} width={logoWidth} height={logoHeight} />
           </Link>
         )}
 

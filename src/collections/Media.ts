@@ -25,6 +25,11 @@ export const Media: CollectionConfig = {
       //required: true,
     },
     {
+      name: 'cloudinary',
+      type: 'json',
+      admin: { hidden: true },
+    },
+    {
       name: 'caption',
       type: 'richText',
       editor: lexicalEditor({

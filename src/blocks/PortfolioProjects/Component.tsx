@@ -53,10 +53,10 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
               key={project.id}
               className="group relative grid grid-cols-1 sm:grid-cols-[140px_1fr] gap-4 sm:gap-6 p-4 -mx-4 rounded-xl hover:bg-pf-hover transition-colors duration-200"
             >
-              {image?.url && (
+              {getMediaUrl(image) && (
                 <div className="relative aspect-[4/3] sm:aspect-square rounded-lg overflow-hidden bg-pf-card-bg">
                   <Image
-                    src={getMediaUrl(image) || image.url!}
+                    src={getMediaUrl(image)}
                     alt={`Screenshot of ${project.title}`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -65,7 +65,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
                 </div>
               )}
 
-              <div className={`space-y-2 ${!image?.url ? 'sm:col-span-full' : ''}`}>
+              <div className={`space-y-2 ${!getMediaUrl(image) ? 'sm:col-span-full' : ''}`}>
                 <h3 className="text-base font-medium text-pf-text-heading">
                   {project.projectUrl ? (
                     <a

@@ -19,6 +19,15 @@ interface CloudinaryFile {
   mimeType: string
 }
 
+function getResourceType(filename: string, mimeType?: string): 'image' | 'video' | 'raw' | 'auto' {
+  if (mimeType?.startsWith('video/')) return 'video'
+  if (mimeType?.startsWith('image/')) return 'image'
+  const ext = filename.split('.').pop()?.toLowerCase() || ''
+  if (['svg', 'webp', 'png', 'jpg', 'jpeg', 'gif', 'avif'].includes(ext)) return 'image'
+  if (['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'zip', 'rar', 'txt', 'csv'].includes(ext)) return 'raw'
+  return 'auto'
+}
+
 export const cloudinaryAdapter = ({
   cloudName,
   apiKey,
@@ -43,13 +52,15 @@ export const cloudinaryAdapter = ({
         file: CloudinaryFile
         data: Record<string, unknown>
       }): Promise<Partial<FileData & TypeWithID>> {
+        const ext = file.filename.split('.').pop()?.toLowerCase() || ''
+        const resourceType = getResourceType(file.filename, file.mimeType)
         const publicId = `${folder}/${collection.slug}/${file.filename.replace(/\.[^.]+$/, '')}`
 
         const result = await new Promise<any>((resolve, reject) => {
           const uploadStream = cloudinary.uploader.upload_stream(
             {
               public_id: publicId,
-              resource_type: 'auto',
+              resource_type: resourceType,
               overwrite: true,
             },
             (error, result) => {
@@ -85,12 +96,14 @@ export const cloudinaryAdapter = ({
       }: {
         doc: FileData & TypeWithID & { prefix?: string }
       }): Promise<void> {
+        const docAny = doc as any
+        const resourceType = docAny?.cloudinary?.resource_type || getResourceType(doc.filename || '')
         const publicId =
-          (doc as any).cloudinary?.public_id ||
+          docAny?.cloudinary?.public_id ||
           (doc.filename ? `${folder}/${collection.slug}/${doc.filename.replace(/\.[^.]+$/, '')}` : '')
         if (!publicId) return
         try {
-          await cloudinary.uploader.destroy(publicId)
+          await cloudinary.uploader.destroy(publicId, { resource_type: resourceType })
         } catch {
           // Ignore deletion errors
         }
@@ -108,21 +121,21 @@ export const cloudinaryAdapter = ({
           return cloudinaryMeta.secure_url
         }
 
-        const publicId = cloudinaryMeta?.public_id || `${folder}/${collection.slug}/${filename.replace(/\.[^.]+$/, '')}`
-        const resourceType = cloudinaryMeta?.resource_type || 'image'
-        const version = cloudinaryMeta?.version ? `/v${cloudinaryMeta.version}` : ''
+        const publicId = `${folder}/${collection.slug}/${filename.replace(/\.[^.]+$/, '')}`
+        const ext = filename.split('.').pop()?.toLowerCase() || ''
+        const resourceType = cloudinaryMeta?.resource_type || getResourceType(filename)
 
-        if (resourceType === 'video') {
-          return `https://res.cloudinary.com/${cloudName}/video/upload${version}/${publicId}`
-        }
         if (resourceType === 'raw') {
-          return `https://res.cloudinary.com/${cloudName}/raw/upload${version}/${publicId}`
+          return `https://res.cloudinary.com/${cloudName}/raw/upload/${publicId}.${ext}`
         }
-        return `https://res.cloudinary.com/${cloudName}/image/upload${version}/${publicId}`
+        if (resourceType === 'video') {
+          return `https://res.cloudinary.com/${cloudName}/video/upload/${publicId}`
+        }
+        return `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}`
       },
 
-      staticHandler(
-        _req: PayloadRequest,
+      async staticHandler(
+        req: PayloadRequest,
         {
           params,
         }: {
@@ -131,13 +144,44 @@ export const cloudinaryAdapter = ({
             filename: string
           }
         },
-      ): Response {
-        const url = `https://res.cloudinary.com/${cloudName}/image/upload/${folder}/${params.collection}/${params.filename}`
+      ): Promise<Response> {
+        const filename = params.filename
+        const ext = filename.split('.').pop()?.toLowerCase() || ''
+        const publicId = `${folder}/${collection.slug}/${filename.replace(/\.[^.]+$/, '')}`
+        const resourceType = getResourceType(filename)
+
+        try {
+          const docs = await req.payload.find({
+            collection: collection.slug as any,
+            where: { filename: { equals: filename } },
+            depth: 0,
+            limit: 1,
+            pagination: false,
+          })
+
+          const doc = docs.docs?.[0] as any
+          if (doc?.cloudinary?.secure_url) {
+            return new Response(null, {
+              status: 302,
+              headers: { Location: doc.cloudinary.secure_url },
+            })
+          }
+        } catch {
+          // fall through to URL construction
+        }
+
+        let url: string
+        if (resourceType === 'raw') {
+          url = `https://res.cloudinary.com/${cloudName}/raw/upload/${publicId}.${ext}`
+        } else if (resourceType === 'video') {
+          url = `https://res.cloudinary.com/${cloudName}/video/upload/${publicId}`
+        } else {
+          url = `https://res.cloudinary.com/${cloudName}/image/upload/${publicId}`
+        }
+
         return new Response(null, {
           status: 302,
-          headers: {
-            Location: url,
-          },
+          headers: { Location: url },
         })
       },
     }
