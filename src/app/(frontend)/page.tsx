@@ -117,14 +117,6 @@ export default async function HomePage() {
     <>
       {draft && <LivePreviewListener />}
 
-      {/* Skip Link */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-pf-skip-bg focus:text-pf-skip-text focus:rounded-lg focus:font-medium"
-      >
-        Skip to main content
-      </a>
-
       <div className="min-h-screen bg-pf-bg text-pf-text">
         <div className="mx-auto max-w-7xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-16">
@@ -134,11 +126,7 @@ export default async function HomePage() {
             </aside>
 
             {/* Main Content */}
-            <main
-              id="main-content"
-              className="pt-24 lg:w-[55%] lg:py-24"
-              tabIndex={-1}
-            >
+            <main className="pt-24 lg:w-[55%] lg:py-24">
               <RenderBlocks
                 blocks={homePage.layout}
                 blockWrapperClassName=""
