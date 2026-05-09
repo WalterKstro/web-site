@@ -34,7 +34,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       <div className="py-8 flex justify-between">
         {data?.showLogo !== false && (
           <Link href="/">
-            <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+            <Logo
+              media={typeof data?.logo === 'object' && data?.logo !== null ? data.logo : null}
+              loading="eager"
+              priority="high"
+              className="invert dark:invert-0"
+            />
           </Link>
         )}
         {data?.showNavItems !== false && <HeaderNav data={data} />}

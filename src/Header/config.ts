@@ -25,6 +25,16 @@ export const Header: GlobalConfig = {
               },
             },
             {
+              name: 'logo',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Logo',
+              admin: {
+                description: 'Upload a custom logo image',
+                condition: (data) => Boolean(data?.showLogo),
+              },
+            },
+            {
               name: 'showNavItems',
               type: 'checkbox',
               defaultValue: true,

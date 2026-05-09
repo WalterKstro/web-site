@@ -15,7 +15,7 @@ export async function Footer() {
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
         {footerData?.showLogo !== false && (
           <Link className="flex items-center" href="/">
-            <Logo />
+            <Logo media={typeof footerData?.logo === 'object' && footerData?.logo !== null ? footerData.logo : null} />
           </Link>
         )}
 

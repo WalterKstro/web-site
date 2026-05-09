@@ -1862,6 +1862,10 @@ export interface Header {
    */
   showLogo?: boolean | null;
   /**
+   * Upload a custom logo image
+   */
+  logo?: (number | null) | Media;
+  /**
    * Toggle the navigation links visibility
    */
   showNavItems?: boolean | null;
@@ -1902,6 +1906,10 @@ export interface Footer {
    * Toggle the logo visibility in the footer
    */
   showLogo?: boolean | null;
+  /**
+   * Upload a custom logo image
+   */
+  logo?: (number | null) | Media;
   /**
    * Toggle the dark/light mode switcher
    */
@@ -1962,6 +1970,7 @@ export interface Sidebar {
  */
 export interface HeaderSelect<T extends boolean = true> {
   showLogo?: T;
+  logo?: T;
   showNavItems?: T;
   showSearch?: T;
   navItems?:
@@ -1988,6 +1997,7 @@ export interface HeaderSelect<T extends boolean = true> {
  */
 export interface FooterSelect<T extends boolean = true> {
   showLogo?: T;
+  logo?: T;
   showThemeSelector?: T;
   copyrightText?: T;
   navItems?:

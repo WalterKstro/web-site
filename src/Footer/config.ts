@@ -25,6 +25,16 @@ export const Footer: GlobalConfig = {
               },
             },
             {
+              name: 'logo',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Logo',
+              admin: {
+                description: 'Upload a custom logo image',
+                condition: (data) => Boolean(data?.showLogo),
+              },
+            },
+            {
               name: 'showThemeSelector',
               type: 'checkbox',
               defaultValue: true,
