@@ -1,13 +1,5 @@
 import type { GlobalConfig } from 'payload'
 
-import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
-
 export const Sidebar: GlobalConfig = {
   slug: 'sidebar',
   access: {
@@ -91,39 +83,6 @@ export const Sidebar: GlobalConfig = {
                 condition: (data) => Boolean(data?.showResumeLink),
               },
             },
-          ],
-        },
-        {
-          label: 'About',
-          fields: [
-            {
-              name: 'about',
-              type: 'richText',
-              label: 'About Content',
-            },
-          ],
-        },
-        {
-          label: 'SEO',
-          name: 'meta',
-          fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: 'media',
-            }),
-            MetaDescriptionField({}),
-            PreviewField({
-              hasGenerateFn: true,
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
           ],
         },
       ],

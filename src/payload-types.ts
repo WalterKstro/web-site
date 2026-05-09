@@ -1857,6 +1857,14 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
+  /**
+   * Toggle the logo visibility in the header
+   */
+  showLogo?: boolean | null;
+  /**
+   * Toggle the navigation links visibility
+   */
+  showNavItems?: boolean | null;
   navItems?:
     | {
         link: {
@@ -1886,6 +1894,18 @@ export interface Header {
  */
 export interface Footer {
   id: number;
+  /**
+   * Toggle the logo visibility in the footer
+   */
+  showLogo?: boolean | null;
+  /**
+   * Toggle the dark/light mode switcher
+   */
+  showThemeSelector?: boolean | null;
+  /**
+   * Copyright notice displayed at the bottom of the footer
+   */
+  copyrightText?: string | null;
   navItems?:
     | {
         link: {
@@ -1929,29 +1949,6 @@ export interface Sidebar {
     | null;
   showResumeLink?: boolean | null;
   resumeUrl?: string | null;
-  about?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-    description?: string | null;
-  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1960,6 +1957,8 @@ export interface Sidebar {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  showLogo?: T;
+  showNavItems?: T;
   navItems?:
     | T
     | {
@@ -1983,6 +1982,9 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  showLogo?: T;
+  showThemeSelector?: T;
+  copyrightText?: T;
   navItems?:
     | T
     | {
@@ -2020,14 +2022,6 @@ export interface SidebarSelect<T extends boolean = true> {
       };
   showResumeLink?: T;
   resumeUrl?: T;
-  about?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        image?: T;
-        description?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

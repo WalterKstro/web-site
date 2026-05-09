@@ -10,20 +10,53 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
-      name: 'navItems',
-      type: 'array',
-      fields: [
-        link({
-          appearances: false,
-        }),
-      ],
-      maxRows: 6,
-      admin: {
-        initCollapsed: true,
-        components: {
-          RowLabel: '@/Header/RowLabel#RowLabel',
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Layout',
+          fields: [
+            {
+              name: 'showLogo',
+              type: 'checkbox',
+              defaultValue: true,
+              label: 'Show Logo',
+              admin: {
+                description: 'Toggle the logo visibility in the header',
+              },
+            },
+            {
+              name: 'showNavItems',
+              type: 'checkbox',
+              defaultValue: true,
+              label: 'Show Navigation Items',
+              admin: {
+                description: 'Toggle the navigation links visibility',
+              },
+            },
+          ],
         },
-      },
+        {
+          label: 'Navigation',
+          fields: [
+            {
+              name: 'navItems',
+              type: 'array',
+              fields: [
+                link({
+                  appearances: false,
+                }),
+              ],
+              maxRows: 6,
+              admin: {
+                initCollapsed: true,
+                components: {
+                  RowLabel: '@/Header/RowLabel#RowLabel',
+                },
+              },
+            },
+          ],
+        },
+      ],
     },
   ],
   hooks: {
