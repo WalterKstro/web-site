@@ -3,28 +3,28 @@
 import React from 'react'
 import Link from 'next/link'
 import {
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Dribbble,
-  Globe,
-  Mail,
-  Codepen,
-  ExternalLink,
-} from 'lucide-react'
+  FaGithub,
+  FaLinkedin,
+  FaXTwitter,
+  FaInstagram,
+  FaDribbble,
+  FaGlobe,
+  FaEnvelope,
+  FaCodepen,
+} from 'react-icons/fa6'
+import { ExternalLink } from 'lucide-react'
 import type { Sidebar as SidebarType } from '@/payload-types'
 import { ThemeToggle } from './ThemeToggle'
 
 const iconMap: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
-  github: Github,
-  linkedin: Linkedin,
-  twitter: Twitter,
-  instagram: Instagram,
-  dribbble: Dribbble,
-  website: Globe,
-  email: Mail,
-  codepen: Codepen,
+  github: FaGithub,
+  linkedin: FaLinkedin,
+  twitter: FaXTwitter,
+  instagram: FaInstagram,
+  dribbble: FaDribbble,
+  website: FaGlobe,
+  email: FaEnvelope,
+  codepen: FaCodepen,
 }
 
 interface SocialLinksProps {
@@ -38,7 +38,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({ links, className }) =>
   return (
     <ul className={className} aria-label="Social links">
       {links.map((link, index) => {
-        const Icon = iconMap[link.platform] || Globe
+        const Icon = iconMap[link.platform] || FaGlobe
         const isEmail = link.platform === 'email' || link.url?.startsWith('mailto:')
         const href = isEmail && !link.url?.startsWith('mailto:') ? `mailto:${link.url}` : link.url
 
@@ -51,7 +51,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({ links, className }) =>
               aria-label={link.label}
               className="group inline-flex items-center justify-center p-2 rounded-lg text-pf-text-muted hover:text-pf-accent hover:bg-pf-hover transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2"
             >
-              <Icon className="w-5 h-5" aria-hidden="true" />
+              <Icon size={20} aria-hidden="true" />
               <span className="sr-only">{link.label}</span>
             </a>
           </li>

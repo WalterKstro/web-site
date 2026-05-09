@@ -66,12 +66,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const sidebar = await getCachedGlobal('sidebar', 0)()
   const p = sidebar as SidebarType
 
-  const title = p?.meta?.title || p?.name || 'Portfolio'
-  const description = p?.meta?.description || p?.tagline || ''
-  const ogImage =
-    p?.meta?.image && typeof p.meta.image === 'object' && 'url' in p.meta.image
-      ? getServerSideURL() + p.meta.image.url
-      : undefined
+  const title = p?.name || 'Portfolio'
+  const description = p?.tagline || ''
 
   return {
     title: `${title} | ${p?.title || ''}`.trim(),
@@ -79,13 +75,6 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: mergeOpenGraph({
       title: `${title} | ${p?.title || ''}`.trim(),
       description,
-      images: ogImage
-        ? [
-            {
-              url: ogImage,
-            },
-          ]
-        : undefined,
       url: '/',
     }),
   }
