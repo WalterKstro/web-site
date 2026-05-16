@@ -10,7 +10,6 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { getServerSideURL } from '@/utilities/getURL'
 
 import { Sidebar } from '@/components/Portfolio/Sidebar'
-import { CursorGlow } from '@/components/CursorGlow'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 
@@ -118,7 +117,7 @@ export default async function HomePage() {
     <>
       {draft && <LivePreviewListener />}
 
-      <CursorGlow>
+      <div className="min-h-screen text-pf-text">
         <div className="container py-12 md:py-20 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-16">
             {/* Sidebar - Sticky on desktop */}
@@ -135,7 +134,7 @@ export default async function HomePage() {
             </main>
           </div>
         </div>
-      </CursorGlow>
+      </div>
     </>
   )
 }
