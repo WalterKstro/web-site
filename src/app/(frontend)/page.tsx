@@ -118,7 +118,7 @@ export default async function HomePage() {
       {draft && <LivePreviewListener />}
 
       <div className="min-h-screen bg-pf-bg text-pf-text">
-        <div className="mx-auto max-w-7xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
+        <div className="container py-12 md:py-20 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-16">
             {/* Sidebar - Sticky on desktop */}
             <aside className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[45%] lg:flex-col lg:justify-between lg:py-24">
