@@ -121,7 +121,7 @@ export default async function HomePage() {
         <div className="container py-12 md:py-20 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-16">
             {/* Sidebar - Sticky on desktop */}
-            <aside className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-[45%] lg:flex-col lg:justify-between lg:py-24">
+            <aside className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-[45%] lg:flex-col lg:pb-24">
               <Sidebar sidebar={p} navItems={navItems} />
             </aside>
 

@@ -112,7 +112,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebar, navItems }) => {
   const { name, title, tagline, socialLinks, showResumeLink, resumeUrl } = sidebar
 
   return (
-    <header className="flex flex-col justify-between h-full py-12 lg:py-0">
+    <header className="flex flex-col justify-center flex-1 gap-12 lg:gap-16">
       <div>
         <div className="flex items-center justify-between mb-3">
           <h1 className="text-4xl sm:text-5xl font-bold text-pf-text-heading tracking-tight">
@@ -130,12 +130,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebar, navItems }) => {
       </div>
 
       {navItems && navItems.length > 0 && (
-        <div className="hidden lg:block mt-16">
+        <div className="hidden lg:block">
           <Navigation items={navItems} />
         </div>
       )}
 
-      <div className="mt-auto pt-12 lg:pt-0">
+      <div>
         {socialLinks && socialLinks.length > 0 && (
           <SocialLinks links={socialLinks} className="flex items-center gap-1" />
         )}
