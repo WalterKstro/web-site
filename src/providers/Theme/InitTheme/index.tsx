@@ -1,47 +1,42 @@
-import React from 'react'
+'use client'
+
+import { useEffect } from 'react'
 
 import { defaultTheme, themeLocalStorageKey } from '../ThemeSelector/types'
 
 export const InitTheme: React.FC = () => {
-  return (
-    <script
-      suppressHydrationWarning
-      dangerouslySetInnerHTML={{
-        __html: `
-(function () {
-  function getImplicitPreference() {
-    var mediaQuery = '(prefers-color-scheme: dark)'
-    var mql = window.matchMedia(mediaQuery)
-    var hasImplicitPreference = typeof mql.matches === 'boolean'
+  useEffect(() => {
+    function getImplicitPreference() {
+      const mediaQuery = '(prefers-color-scheme: dark)'
+      const mql = window.matchMedia(mediaQuery)
+      const hasImplicitPreference = typeof mql.matches === 'boolean'
 
-    if (hasImplicitPreference) {
-      return mql.matches ? 'dark' : 'light'
+      if (hasImplicitPreference) {
+        return mql.matches ? 'dark' : 'light'
+      }
+
+      return null
     }
 
-    return null
-  }
-
-  function themeIsValid(theme) {
-    return theme === 'light' || theme === 'dark'
-  }
-
-  var themeToSet = '${defaultTheme}'
-  var preference = window.localStorage.getItem('${themeLocalStorageKey}')
-
-  if (themeIsValid(preference)) {
-    themeToSet = preference
-  } else {
-    var implicitPreference = getImplicitPreference()
-
-    if (implicitPreference) {
-      themeToSet = implicitPreference
+    function themeIsValid(theme: string | null): theme is 'light' | 'dark' {
+      return theme === 'light' || theme === 'dark'
     }
-  }
 
-  document.documentElement.setAttribute('data-theme', themeToSet)
-})();
-`,
-      }}
-    />
-  )
+    let themeToSet = defaultTheme
+    const preference = window.localStorage.getItem(themeLocalStorageKey)
+
+    if (themeIsValid(preference)) {
+      themeToSet = preference
+    } else {
+      const implicitPreference = getImplicitPreference()
+
+      if (implicitPreference) {
+        themeToSet = implicitPreference
+      }
+    }
+
+    document.documentElement.setAttribute('data-theme', themeToSet)
+  }, [])
+
+  return null
 }
