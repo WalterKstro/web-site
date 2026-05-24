@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { Analytics } from '@vercel/analytics/next'
 import { cn } from '@/utilities/ui'
 import { Inter, Nunito } from 'next/font/google'
 import React from 'react'
@@ -52,6 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Footer />
           </CursorGlow>
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
