@@ -41,7 +41,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
         id={`${sectionId}-heading`}
         className="text-sm font-bold uppercase tracking-widest text-pf-text-heading mb-8 lg:hidden"
       >
-        {heading || 'Projects'}
+        {heading || 'Proyectos'}
       </h2>
 
       <div className="space-y-12">
@@ -57,7 +57,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
                 <div className="relative aspect-[4/3] sm:aspect-square rounded-lg overflow-hidden bg-pf-card-bg">
                   <Image
                     src={getMediaUrl(image)}
-                    alt={`Screenshot of ${project.title}`}
+                    alt={`Captura de pantalla de ${project.title}`}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                     sizes="(max-width: 640px) 100vw, 140px"
@@ -79,7 +79,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
                         className="w-4 h-4 text-pf-text-muted group-hover/link:text-pf-accent transition-all duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
                         aria-hidden="true"
                       />
-                      <span className="sr-only">(opens in new tab)</span>
+                      <span className="sr-only">(abre en nueva pestaña)</span>
                     </a>
                   ) : (
                     project.title
@@ -105,7 +105,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
                 {project.technologies && project.technologies.length > 0 && (
                   <ul
                     className="flex flex-wrap gap-2 pt-2"
-                    aria-label={`Technologies used in ${project.title}`}
+                    aria-label={`Tecnologías usadas en ${project.title}`}
                   >
                     {project.technologies.map((tech, i) => (
                       <li
@@ -127,7 +127,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
         href="/projects"
         className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-pf-text-heading hover:text-pf-accent transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded group"
       >
-        View Full Project Archive
+        Ver archivo completo de proyectos
         <ArrowUpRight
           className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
           aria-hidden="true"
