@@ -30,7 +30,13 @@ export const PortfolioProjectsArchiveBlock: React.FC<
 
   if (!projects.length) {
     return (
-      <section id={sectionId || 'proyectos'} className="py-16">
+      <section id={sectionId || 'proyectos'} className="py-16" aria-labelledby={`${sectionId || 'proyectos'}-heading`}>
+        <h2
+          id={`${sectionId || 'proyectos'}-heading`}
+          className="text-3xl font-bold text-pf-text-heading mb-12"
+        >
+          {heading || 'Proyectos'}
+        </h2>
         <p className="text-center text-pf-text-muted">
           No hay proyectos disponibles.
         </p>
@@ -46,14 +52,14 @@ export const PortfolioProjectsArchiveBlock: React.FC<
     <section
       id={sectionId || 'proyectos'}
       className="py-16"
-      aria-labelledby="projects-heading"
+      aria-labelledby={`${sectionId || 'proyectos'}-heading`}
     >
-      <h1
-        id="projects-heading"
+      <h2
+        id={`${sectionId || 'proyectos'}-heading`}
         className="text-3xl font-bold text-pf-text-heading mb-12"
       >
         {heading || 'Proyectos'}
-      </h1>
+      </h2>
 
       {/* Desktop Table Header */}
       <div className="hidden md:grid md:grid-cols-[2fr_2fr_1fr] gap-4 pb-3 border-b border-pf-line mb-2">
@@ -180,9 +186,13 @@ function extractPlainText(content: any, maxLength: number = 120): string {
   }
 
   if (content.root.children && Array.isArray(content.root.children)) {
-    for (const child of content.root.children) {
-      traverse(child)
+    for (let i = 0; i < content.root.children.length; i++) {
+      traverse(content.root.children[i])
       if (text.length >= maxLength) break
+      // Add space between block-level siblings, but not after the last one
+      if (i < content.root.children.length - 1 && text.length > 0) {
+        text += ' '
+      }
     }
   }
 
