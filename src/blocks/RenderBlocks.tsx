@@ -12,6 +12,7 @@ import { PortfolioExperienceBlock } from '@/blocks/PortfolioExperience/Component
 import { PortfolioProjectsBlock } from '@/blocks/PortfolioProjects/Component'
 import { PortfolioWritingBlock } from '@/blocks/PortfolioWriting/Component'
 import { PortfolioFooterBlock } from '@/blocks/PortfolioFooter/Component'
+import { PortfolioProjectsArchiveBlock } from '@/blocks/PortfolioProjectsArchive/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -24,6 +25,7 @@ const blockComponents = {
   portfolioProjects: PortfolioProjectsBlock,
   portfolioWriting: PortfolioWritingBlock,
   portfolioFooter: PortfolioFooterBlock,
+  portfolioProjectsArchive: PortfolioProjectsArchiveBlock,
 }
 
 export const RenderBlocks: React.FC<{
