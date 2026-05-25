@@ -175,6 +175,7 @@ export interface Page {
     | PortfolioProjectsBlock
     | PortfolioWritingBlock
     | PortfolioFooterBlock
+    | PortfolioProjectsArchiveBlock
   )[];
   meta?: {
     title?: string | null;
@@ -839,6 +840,17 @@ export interface PortfolioFooterBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioProjectsArchiveBlock".
+ */
+export interface PortfolioProjectsArchiveBlock {
+  heading?: string | null;
+  sectionId?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'portfolioProjectsArchive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "experiences".
  */
 export interface Experience {
@@ -1214,6 +1226,7 @@ export interface PagesSelect<T extends boolean = true> {
         portfolioProjects?: T | PortfolioProjectsBlockSelect<T>;
         portfolioWriting?: T | PortfolioWritingBlockSelect<T>;
         portfolioFooter?: T | PortfolioFooterBlockSelect<T>;
+        portfolioProjectsArchive?: T | PortfolioProjectsArchiveBlockSelect<T>;
       };
   meta?:
     | T
@@ -1364,6 +1377,16 @@ export interface PortfolioWritingBlockSelect<T extends boolean = true> {
  */
 export interface PortfolioFooterBlockSelect<T extends boolean = true> {
   customText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortfolioProjectsArchiveBlock_select".
+ */
+export interface PortfolioProjectsArchiveBlockSelect<T extends boolean = true> {
+  heading?: T;
+  sectionId?: T;
   id?: T;
   blockName?: T;
 }
