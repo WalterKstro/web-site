@@ -2,16 +2,10 @@ import React from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import type { Project } from '@/payload-types'
-
-// Temporary type alias until payload-types are regenerated
-interface PortfolioProjectsArchiveBlockProps {
-  heading?: string | null
-  sectionId?: string | null
-  id?: string | null
-  blockName?: string | null
-  blockType: 'portfolioProjectsArchive'
-}
+import type {
+  Project,
+  PortfolioProjectsArchiveBlock as PortfolioProjectsArchiveBlockProps,
+} from '@/payload-types'
 
 export const PortfolioProjectsArchiveBlock: React.FC<
   PortfolioProjectsArchiveBlockProps
