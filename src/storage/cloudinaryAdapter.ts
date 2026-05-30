@@ -1,4 +1,5 @@
-import { v2 as cloudinary } from 'cloudinary'
+import { v2 as cloudinary, type UploadApiResponse } from 'cloudinary'
+import type { Config } from '@/payload-types'
 import type {
   CollectionConfig,
   FileData,
@@ -56,7 +57,7 @@ export const cloudinaryAdapter = ({
         const resourceType = getResourceType(file.filename, file.mimeType)
         const publicId = `${folder}/${collection.slug}/${file.filename.replace(/\.[^.]+$/, '')}`
 
-        const result = await new Promise<any>((resolve, reject) => {
+        const result = await new Promise<UploadApiResponse>((resolve, reject) => {
           const uploadStream = cloudinary.uploader.upload_stream(
             {
               public_id: publicId,
@@ -65,7 +66,8 @@ export const cloudinaryAdapter = ({
             },
             (error, result) => {
               if (error) reject(error)
-              else resolve(result)
+              else if (result) resolve(result)
+              else reject(new Error('Cloudinary upload returned no result'))
             },
           )
           uploadStream.end(file.buffer)
@@ -96,10 +98,10 @@ export const cloudinaryAdapter = ({
       }: {
         doc: FileData & TypeWithID & { prefix?: string }
       }): Promise<void> {
-        const docAny = doc as any
-        const resourceType = docAny?.cloudinary?.resource_type || getResourceType(doc.filename || '')
+        const cloudinaryMeta = (doc as Record<string, unknown>)?.cloudinary as Record<string, string> | undefined
+        const resourceType = cloudinaryMeta?.resource_type || getResourceType(doc.filename || '')
         const publicId =
-          docAny?.cloudinary?.public_id ||
+          cloudinaryMeta?.public_id ||
           (doc.filename ? `${folder}/${collection.slug}/${doc.filename.replace(/\.[^.]+$/, '')}` : '')
         if (!publicId) return
         try {
@@ -116,7 +118,7 @@ export const cloudinaryAdapter = ({
         filename: string
         data: Record<string, unknown>
       }): string {
-        const cloudinaryMeta = (data as any)?.cloudinary
+        const cloudinaryMeta = (data as Record<string, unknown>)?.cloudinary as Record<string, string> | undefined
         if (cloudinaryMeta?.secure_url) {
           return cloudinaryMeta.secure_url
         }
@@ -152,18 +154,23 @@ export const cloudinaryAdapter = ({
 
         try {
           const docs = await req.payload.find({
-            collection: collection.slug as any,
+            collection: collection.slug as keyof Config['collections'],
             where: { filename: { equals: filename } },
             depth: 0,
             limit: 1,
+            overrideAccess: false,
             pagination: false,
+            req,
           })
 
-          const doc = docs.docs?.[0] as any
-          if (doc?.cloudinary?.secure_url) {
+          const doc = (docs.docs?.[0] as unknown) as
+            | (Record<string, unknown> & { cloudinary?: Record<string, string> })
+            | undefined
+          const secureUrl = doc?.cloudinary?.secure_url
+          if (secureUrl) {
             return new Response(null, {
               status: 302,
-              headers: { Location: doc.cloudinary.secure_url },
+              headers: { Location: secureUrl },
             })
           }
         } catch {

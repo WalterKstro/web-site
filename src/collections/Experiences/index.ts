@@ -40,6 +40,7 @@ export const Experiences: CollectionConfig<'experiences'> = {
       name: 'startDate',
       type: 'date',
       required: true,
+      index: true,
       admin: {
         date: {
           pickerAppearance: 'monthOnly',
@@ -86,6 +87,7 @@ export const Experiences: CollectionConfig<'experiences'> = {
         position: 'sidebar',
       },
       defaultValue: 0,
+      index: true,
     },
   ],
   hooks: {

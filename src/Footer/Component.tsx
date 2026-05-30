@@ -12,13 +12,20 @@ import { getMediaUrl } from '@/utilities/getMediaUrl'
 export async function Footer() {
   const footerData = await getCachedGlobal('footer', 1)()
 
-  let logoMedia: Media | null = null
+  let logoMedia: Partial<Media> | null = null
   if (typeof footerData.logo === 'number') {
     const payload = await getPayload({ config: configPromise })
     logoMedia = (await payload.findByID({
       collection: 'media',
       id: footerData.logo,
-    })) as Media
+      overrideAccess: false,
+      select: {
+        url: true,
+        alt: true,
+        width: true,
+        height: true,
+      },
+    })) as Partial<Media>
   } else if (typeof footerData.logo === 'object' && footerData.logo !== null) {
     logoMedia = footerData.logo
   }

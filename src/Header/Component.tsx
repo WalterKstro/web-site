@@ -9,13 +9,20 @@ import { getMediaUrl } from '@/utilities/getMediaUrl'
 export async function Header() {
   const headerData = await getCachedGlobal('header', 1)()
 
-  let logoMedia: Media | null = null
+  let logoMedia: Partial<Media> | null = null
   if (typeof headerData.logo === 'number') {
     const payload = await getPayload({ config: configPromise })
     logoMedia = (await payload.findByID({
       collection: 'media',
       id: headerData.logo,
-    })) as Media
+      overrideAccess: false,
+      select: {
+        url: true,
+        alt: true,
+        width: true,
+        height: true,
+      },
+    })) as Partial<Media>
   } else if (typeof headerData.logo === 'object' && headerData.logo !== null) {
     logoMedia = headerData.logo
   }

@@ -59,6 +59,7 @@ export const Projects: CollectionConfig<'projects'> = {
       name: 'featured',
       type: 'checkbox',
       defaultValue: false,
+      index: true,
       label: 'Featured Project',
     },
     {
@@ -84,6 +85,7 @@ export const Projects: CollectionConfig<'projects'> = {
         position: 'sidebar',
       },
       defaultValue: 0,
+      index: true,
     },
   ],
   hooks: {

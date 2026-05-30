@@ -1,4 +1,4 @@
-import type { Config } from 'src/payload-types'
+import type { Config } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
@@ -12,6 +12,7 @@ async function getDocument(collection: Collection, slug: string, depth = 0) {
   const page = await payload.find({
     collection,
     depth,
+    overrideAccess: false,
     where: {
       slug: {
         equals: slug,

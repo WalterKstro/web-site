@@ -127,6 +127,7 @@ export const Posts: CollectionConfig<'posts'> = {
                 position: 'sidebar',
               },
               hasMany: true,
+              index: true,
               relationTo: 'categories',
             },
           ],
@@ -164,6 +165,7 @@ export const Posts: CollectionConfig<'posts'> = {
     {
       name: 'publishedAt',
       type: 'date',
+      index: true,
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',
