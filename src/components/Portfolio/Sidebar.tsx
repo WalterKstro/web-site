@@ -123,7 +123,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ sidebar, navItems }) => {
           {title}
         </h2>
         {tagline && (
-          <p className="text-pf-text-muted text-base leading-relaxed max-w-xs">
+          <p className="text-pf-text-muted text-base leading-relaxed">
             {tagline}
           </p>
         )}

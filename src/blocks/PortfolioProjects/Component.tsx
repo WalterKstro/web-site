@@ -124,7 +124,7 @@ export const PortfolioProjectsBlock: React.FC<PortfolioProjectsBlockProps> = asy
       </div>
 
       <a
-        href="/projects"
+        href="/proyectos"
         className="inline-flex items-center gap-2 mt-8 text-sm font-medium text-pf-text-heading hover:text-pf-accent transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-pf-focus focus-visible:outline-offset-2 rounded group"
       >
         Ver archivo completo de proyectos

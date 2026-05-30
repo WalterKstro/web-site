@@ -24,7 +24,7 @@ export const PortfolioProjectsArchiveBlock: React.FC<
 
   if (!projects.length) {
     return (
-      <section id={sectionId || 'proyectos'} className="py-16" aria-labelledby={`${sectionId || 'proyectos'}-heading`}>
+      <section id={sectionId || 'proyectos'} aria-labelledby={`${sectionId || 'proyectos'}-heading`}>
         <h2
           id={`${sectionId || 'proyectos'}-heading`}
           className="text-3xl font-bold text-pf-text-heading mb-12"
@@ -45,7 +45,6 @@ export const PortfolioProjectsArchiveBlock: React.FC<
   return (
     <section
       id={sectionId || 'proyectos'}
-      className="py-16"
       aria-labelledby={`${sectionId || 'proyectos'}-heading`}
     >
       <h2
